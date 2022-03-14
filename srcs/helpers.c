@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:21:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/12 14:39:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/12 23:33:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	ft_isalnum(int c)
 
 void	ft_putstr(char *str)
 {
-	while (*str++)
-		write(1, &str, 1);
+	while (*str)
+		write(1, &*str++, 1);
 }
 
 static void	check_int(double r)

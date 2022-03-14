@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/12 14:42:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/13 23:25:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static void	check_spaces()
+static void	check_spaces(char **argv)
 {
 	int	i;
 	int	j;
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 {
 	if (argc >= 4)
 	{
-		check_spaces();
+		check_spaces(argv);
 		if (ft_atoi(argv[1]) < 1)
 			printf("Please input 1 or more number of philosophers\n");
 		if (ft_atoi(argv[2]) < 0 || ft_atoi(argv[3]) < 0)
@@ -58,6 +58,7 @@ int main(int argc, char **argv)
 			if (ft_atoi(argv[4]) < 1 || !argv[4])
 				printf("Please enter a valid number for the time\n");
 		}
+		exec_threads(argv);
 	}
 	else
 		printf("Please input more arguments!\n");
