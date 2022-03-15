@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:21:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/12 23:33:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/15 12:19:52 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,12 @@ int	ft_atoi(const char *str)
 	check_num(str, i);
 	while (str[i] <= '9' && str[i] >= '0')
 	{
-		 r *= 10;
-		 r = r + (str[i] - '0');
-		 i++;
+		if (i >= 10)
+			check_int(r);
+		r *= 10;
+		r = r + (str[i] - '0');
+		i++;
 	}
 	r *= s;
-	check_int(r);
 	return (r);
 }

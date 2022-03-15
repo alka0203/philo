@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/14 20:16:03 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/15 17:03:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,22 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <stdlib.h>
+# include <sys/time.h>
 
 typedef struct s_mutex
 {
     pthread_mutex_t flag_lock;
-    int				*fork;
+    pthread_mutex_t *fork;
 }   t_mutex;
+
+typedef struct s_args
+{
+    int num_philos;
+    int tm_eat;
+    int tm_die;
+    int tm_sleep;
+    int num_tm_eat;
+}  t_args;
 
 int     ft_atoi(const char *str);
 int     ft_isalnum(int c);
