@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/15 17:03:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/15 17:17:27 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_mutex
 {
     pthread_mutex_t flag_lock;
     pthread_mutex_t *fork;
+    int             *philo_fork;
 }   t_mutex;
 
 typedef struct s_args
