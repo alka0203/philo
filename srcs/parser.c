@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/15 17:03:50 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:07:27 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static void	philo_init(char **argv)
 
 int main(int argc, char **argv)
 {
+	t_mutex	mut;
+
 	if (argc >= 5)
 	{
 		check_spaces(argv);
