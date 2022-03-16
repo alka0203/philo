@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 11:54:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/15 17:17:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/15 17:04:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 void	*eat(void *arg)
 {
-	t_mutex	mut;
+	// t_mutex	mut;
 	struct timeval m;
 	int		i;
 
 	i = *(int *)arg;
-	mut.philo_fork[i] = 1;
 	// pthread_mutex_lock(&mut.fork[i]);
 	gettimeofday(&m, NULL);
 	printf("%d philo %d picked up a fork\n", m.tv_usec, i);
@@ -34,7 +33,7 @@ void	exec_threads(char **argv)
 	// t_mutex	mut;
 	t_args	args;
 	int		*a;
-	pthread_t thread[ft_atoi(argv[1])];
+	pthread_t thread[3];
 	int		i;
 
 	// pthread_mutex_init(mut.fork, NULL);
