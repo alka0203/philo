@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 11:32:22 by asanthos          #+#    #+#              #
-#    Updated: 2022/03/15 14:19:59 by asanthos         ###   ########.fr        #
+#    Updated: 2022/03/17 18:31:07 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ CFLAGS = -Wall -Werror -Wextra -pthread
 
 RM = rm -rf
 
-$(NAME): ${OBJS}
-		$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+$(NAME):	$(OBJS)
+			$(CC) $(OBJS) -o $(NAME)
 
 all:	${NAME}	
 

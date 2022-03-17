@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/16 21:14:58 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:16:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ static void	check_spaces(char **argv)
 // 	args.num_tm_eat = ft_atoi(argv[5]);
 // }
 
+	// #include "helpers.c"
+	// #include "philo.c"
 int main(int argc, char **argv)
 {
-	// t_mutex	mut;
-
 	if (argc >= 5)
 	{
 		check_spaces(argv);
