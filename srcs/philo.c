@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:11:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/17 19:21:35 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:24:02 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	philo_sleep(struct timeval *m, t_mutex *mut)
 	gettimeofday(m, NULL);
 	printf("%d philo %d is thinking\n", m->tv_usec , mut->i);
 }
+
+void	*func(void *arg)
 
 void    *eat(void *arg)
 {

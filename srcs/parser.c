@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/17 18:16:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:48:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,26 @@ static void	check_spaces(char **argv)
 	}
 }
 
-// static void	philo_init(char **argv)
-// {
-// 	t_args	args;
+static t_args	*philo_init(char **argv)
+{
+	t_args	args;
 
-// 	args.num_philos = ft_atoi(argv[1]);
-// 	args.tm_die = ft_atoi(argv[2]);
-// 	args.tm_eat = ft_atoi(argv[3]);
-// 	args.tm_sleep = ft_atoi(argv[4]);
-// 	args.num_tm_eat = ft_atoi(argv[5]);
-// }
+	args.num_philos = ft_atoi(argv[1]);
+	args.tm_die = ft_atoi(argv[2]);
+	args.tm_eat = ft_atoi(argv[3]);
+	args.tm_sleep = ft_atoi(argv[4]);
+	args.num_tm_eat = ft_atoi(argv[5]);
+	return (args);
+}
 
-	// #include "helpers.c"
-	// #include "philo.c"
 int main(int argc, char **argv)
 {
 	if (argc >= 5)
 	{
 		check_spaces(argv);
-		// philo_init(argv);
+		philo_init(argv);
 		exec_threads(argv);
 	}
-	else
-		printf("Please input more arguments!\n");
+
+
 }
