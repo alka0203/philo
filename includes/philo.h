@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/20 02:37:16 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/20 17:24:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ typedef struct s_mutex
     int             j;
     int             k;
 	suseconds_t		p_create;
-    suseconds_t     tm_a_eat;
+    suseconds_t     tm_eat;
+    suseconds_t     tm_to_die;
     suseconds_t     right_fork;
     suseconds_t     left_fork;
     char            **av;
@@ -49,7 +50,8 @@ typedef struct s_args
 
 int     ft_atoi(const char *str);
 int     ft_isalnum(int c);
-void	exec_threads(char **argv);
+void    philo_init(char **argv);
 void	*ft_calloc(size_t nmemb, size_t size);
+void    exec_threads(char **argv);
 
 #endif
