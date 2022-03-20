@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 20:40:23 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/19 17:31:31 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/20 09:19:15 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,63 @@ void    *eat(void *arg)
 	mut.j = mut.i - 1;
 	if (mut.i == ft_atoi(mut.av[1]))
 		mut.k = 1;
+	mut.j = mut.i - 1;
 	if (mut.i == 1)
-		mut.k = ft_atoi(mut.av[1]);	
-	//fork mut.i
-	pthread_mutex_lock(&mut.fork[mut.i]);
-	gettimeofday(&m, NULL);
-	mut.philo_fork[mut.i] = 1;
-	printf("%d philo %d picks up a fork\n", (m.tv_usec - mut.p_create), mut.i);
-	// pthread_mutex_unlock(&mut.fork[mut.i]);
+		mut.j = ft_atoi(mut.av[1]);
+	//order of everything is messed up & maybe one more mutex
+		pthread_mutex_lock(&mut.fork[mut.i]);
+		mut.philo_fork[mut.i] = 1;
+		gettimeofday(&m, NULL);
+		printf("%ld philo %d picks up a fork\n", (m.tv_usec - mut.p_create), mut.i);
+		pthread_mutex_unlock(&mut.fork[mut.i]);
+		// philo_sleep(&mut);
+	// printf("%d is i\n", mut.i);
+	// printf("%d is philo_fork\n", mut.philo_fork[mut.k]);
 
-	//for mut.k
 	if (mut.philo_fork[mut.k] == 0 || mut.philo_fork[mut.j] == 0)
+	{
+		if (mut.philo_fork[mut.k] == 0)
+		{
+			pthread_mutex_lock(&mut.fork[mut.k]);
+			mut.philo_fork[mut.k] = 1;
+			gettimeofday(&m, NULL);
+			mut.right_fork = m.tv_sec;
+			printf("%ld philo %d picks up a fork\n", (m.tv_usec - mut.p_create), mut.i);
+			pthread_mutex_unlock(&mut.fork[mut.k]);
+		}
+		else if (mut.philo_fork[mut.j] == 0)
+		{
+			pthread_mutex_lock(&mut.fork[mut.j]);
+			mut.philo_fork[mut.j] = 1;
+			gettimeofday(&m, NULL);
+			mut.left_fork = m.tv_sec;
+			printf("%ld philo %d picks up a fork\n", (m.tv_usec - mut.p_create), mut.i);
+			pthread_mutex_unlock(&mut.fork[mut.k]);
+		}
+		else
+		{
+			gettimeofday(&m, NULL);
+			if ((mut.right_fork - mut.p_create) >= (mut.left_fork - mut.p_create))
+			{
+				pthread_mutex_lock(&mut.fork[mut.k]);
+				mut.philo_fork[mut.k] = 1;
+				gettimeofday(&m, NULL);
+				mut.right_fork = m.tv_sec;
+				printf("%ld philo %d picks up a fork\n", (m.tv_usec - mut.p_create), mut.i);
+				pthread_mutex_unlock(&mut.fork[mut.k]);
+			}
+			else
+			{
+				pthread_mutex_lock(&mut.fork[mut.j]);
+				mut.philo_fork[mut.j] = 1;
+				gettimeofday(&m, NULL);
+				mut.left_fork = m.tv_sec;
+				printf("%ld philo %d picks up a fork\n", (m.tv_usec - mut.p_create), mut.i);
+				pthread_mutex_unlock(&mut.fork[mut.k]);
+			}
+		}
+	}
+	if (mut.philo_fork[mut.k] == 1 && mut.philo_fork[mut.i] == 1)
 	{
 		if (mut.philo_fork[mut.k] == 0)
 		{

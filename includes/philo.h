@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/18 21:17:22 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/20 02:37:16 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_mutex
     int             k;
 	suseconds_t		p_create;
     suseconds_t     tm_a_eat;
+    suseconds_t     right_fork;
+    suseconds_t     left_fork;
     char            **av;
     int             flag;
     
