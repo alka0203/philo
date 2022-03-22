@@ -6,35 +6,56 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 14:55:43 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/22 14:34:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/22 15:10:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+static void	eat(t_mutex *mut)
+{
+	struct timeval	m;
+	
+	if ((mut->philo_fork[mut->k] == 0 || mut->philo_fork[mut->j] == 0) && mut->philo_fork[mut->i] == 0)
+	{
+		gettimeofday(&m, NULL);
+		mut->tm_eat = ((m.tv_usec / 1000) + (m.tv_sec * 1000));
+		printf("%ld philo %d is eating\n", (((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->p_create), mut->i);
+		usleep(ft_atoi(mut->av[3]));
+		mut->philo_fork[mut->i] = 0;
+		if (mut->philo_fork[mut->j] == 1)
+			mut->philo_fork[mut->j] = 0;
+		else if (mut->philo_fork[mut->k] == 1)
+			mut->philo_fork[mut->k] = 0;
+	}
+}
+
 static void	check_fork2(t_mutex *mut)
 {
 	struct timeval	m;
 
-	if ((mut->philo_fork[mut->i] == 0)
+	if (mut->philo_fork[mut->j] == 0)
 	{
-		pthread_mutex_lock(&mut->fork[mut->i]);
-		mut->philo_fork[mut->i] = 1;
+		pthread_mutex_lock(&mut->fork[mut->j]);
+		mut->philo_fork[mut->j] = 1;
 		gettimeofday(&m, NULL);
 		printf("%ld philo %d picks up a fork\n", (((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->p_create), mut->i);
-		pthread_mutex_unlock(&mut->fork[mut->i]);
+		pthread_mutex_unlock(&mut->fork[mut->j]);
 	}
-	else if ((mut->philo_fork[mut->j] == 0)
+	else if (mut->philo_fork[mut->k] == 0)
 	{
-		pthread_mutex_lock(&mut->fork[mut->i]);
-		mut->philo_fork[mut->i]= 1;
-		pthread_mutex_unlock(&mut->fork[mut->i]);
+		pthread_mutex_lock(&mut->fork[mut->k]);
+		mut->philo_fork[mut->k] = 1;
+		gettimeofday(&m, NULL);
+		printf("%ld philo %d picks up a fork\n", (((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->p_create), mut->i);
+		pthread_mutex_unlock(&mut->fork[mut->k]);
 	}
 	else
 	{
 		//check which one has lesser seconds
 		//sleep for the number of sedonds till philo done eating
-		usleep();
+		gettimeofday(&m, NULL);
+		usleep(((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->tm_eat);
 	}
 }
 
@@ -46,6 +67,7 @@ static void	check_fork1(t_mutex *mut)
 	{
 		pthread_mutex_lock(&mut->fork[mut->i]);
 		mut->philo_fork[mut->i] = 1;
+		usleep(1000);
 		gettimeofday(&m, NULL);
 		printf("%ld philo %d picks up a fork\n", (((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->p_create), mut->i);
 		pthread_mutex_unlock(&mut->fork[mut->i]);
@@ -53,7 +75,8 @@ static void	check_fork1(t_mutex *mut)
 	else
 	{
 		//sleep for the number of sedonds till philo done eating
-		usleep();
+		gettimeofday(&m, NULL);
+		usleep(((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->tm_eat);
 	}
 }
 
@@ -66,8 +89,10 @@ void	*tasks(void *args)
 	if (mut->flag == 0)
 	{
 		gettimeofday(&m, NULL);
+		printf("sSEC: %ld\n", m.tv_sec);
+		printf("Mirco: %d\n", m.tv_usec);
 		mut->p_create = ((m.tv_usec / 1000) + (m.tv_sec * 1000));
-		usleep(1000);
+		// printf("%d\n", mut->p_create);
 	}
 	mut->flag = 1;
 	mut->k = mut->i + 1;
@@ -77,17 +102,18 @@ void	*tasks(void *args)
 	if (mut->i == 1)
 		mut->j = ft_atoi(mut->av[1]);
 	check_fork1(mut);
-	check_fork1(mut);
-	return args;
+	check_fork2(mut);
+	eat(mut);
+	return (void *)mut;
 }
 
 static void exec_threads(t_mutex *mut, char **argv, t_args *args)
 {
 	pthread_t		threads[ft_atoi(argv[1])];
 	struct timeval	m;
+	int				*res;
 	
 	mut->i = 1;
-
 	mut->tm_eat = 0;
 	mut->tm_to_die = 0;
 	m.tv_sec = 0;
@@ -105,11 +131,12 @@ static void exec_threads(t_mutex *mut, char **argv, t_args *args)
 		mut->i = 1;
 		while (mut->i <= args->num_philos)
 		{
-			if (pthread_join(threads[mut->i], NULL) != 0)
+			if (pthread_join(threads[mut->i], (void **)&res) != 0)
 				return;
 			mut->i++;
 		}
 	}
+	printf("%ld philo %d has died\n", ((m.tv_usec / 1000) + (m.tv_sec * 1000)), mut->i);
 }
 
 void philo_init(char **argv)
