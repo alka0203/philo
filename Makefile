@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 11:32:22 by asanthos          #+#    #+#              #
-#    Updated: 2022/03/20 17:23:50 by asanthos         ###   ########.fr        #
+#    Updated: 2022/03/21 21:46:39 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philo
 
 SRCS =	./srcs/parser.c		\
 		./srcs/helpers.c	\
-		./srcs/new.c		\
+		./srcs/final.c		\
 
 OBJS = ${SRCS:.c=.o}
 

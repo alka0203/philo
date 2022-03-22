@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/20 17:24:19 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/21 21:47:31 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 	{
 		check_spaces(argv);
 		// philo_init(argv);
-		exec_threads(argv);
+		philo_init(argv);
 	}
 
 

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/20 17:24:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/21 21:47:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int     ft_atoi(const char *str);
 int     ft_isalnum(int c);
 void    philo_init(char **argv);
 void	*ft_calloc(size_t nmemb, size_t size);
-void    exec_threads(char **argv);
+// void    exec_threads(char **argv);
 
 #endif
