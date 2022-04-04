@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 14:55:43 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/22 15:10:41 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/24 18:25:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	eat(t_mutex *mut)
 {
 	struct timeval	m;
 	
-	if ((mut->philo_fork[mut->k] == 0 || mut->philo_fork[mut->j] == 0) && mut->philo_fork[mut->i] == 0)
+	if ((mut->philo_fork[mut->k] == 1 || mut->philo_fork[mut->j] == 1) && mut->philo_fork[mut->i] == 1)
 	{
 		gettimeofday(&m, NULL);
 		mut->tm_eat = ((m.tv_usec / 1000) + (m.tv_sec * 1000));
@@ -89,10 +89,7 @@ void	*tasks(void *args)
 	if (mut->flag == 0)
 	{
 		gettimeofday(&m, NULL);
-		printf("sSEC: %ld\n", m.tv_sec);
-		printf("Mirco: %d\n", m.tv_usec);
 		mut->p_create = ((m.tv_usec / 1000) + (m.tv_sec * 1000));
-		// printf("%d\n", mut->p_create);
 	}
 	mut->flag = 1;
 	mut->k = mut->i + 1;
@@ -102,7 +99,9 @@ void	*tasks(void *args)
 	if (mut->i == 1)
 		mut->j = ft_atoi(mut->av[1]);
 	check_fork1(mut);
+	printf("lala1\n");
 	check_fork2(mut);
+	printf("lala\n");
 	eat(mut);
 	return (void *)mut;
 }
@@ -118,7 +117,7 @@ static void exec_threads(t_mutex *mut, char **argv, t_args *args)
 	mut->tm_to_die = 0;
 	m.tv_sec = 0;
 	m.tv_usec = 0;
-	while ((((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->tm_eat) <= mut->tm_to_die)
+	while ((((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->tm_eat) >= mut->tm_to_die)
 	{
 		while (mut->i <= args->num_philos)
 		{

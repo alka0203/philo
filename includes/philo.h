@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/22 11:32:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/03/23 15:37:30 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ typedef struct s_mutex
 	int				i;
     int             j;
     int             k;
-	suseconds_t		p_create;
-    suseconds_t     tm_eat;
-    suseconds_t     tm_to_die;
-    suseconds_t     right_fork;
-    suseconds_t     left_fork;
+	long int		p_create;
+    long int     tm_eat;
+    long int     tm_to_die;
+    long int     right_fork;
+    long int     left_fork;
     char            **av;
     int             flag;
     
