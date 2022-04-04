@@ -11,7 +11,10 @@ int main ()
     {
         gettimeofday(&m, NULL);
         printf("%ld\n", ((m.tv_usec / 1000) + (m.tv_sec * 1000)));
-        usleep(1000);
+        struct  timeval n;
+        gettimeofday(&n, NULL);
+        printf("%ld\n", ((n.tv_usec / 1000) + (n.tv_sec * 1000)));
+       usleep(200);
         i++;
     }
 }
