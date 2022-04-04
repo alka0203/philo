@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 19:49:01 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/04 01:21:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/05 00:36:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	*tasks(void *arg)
 	philo = (t_philo *)arg;
 	gettimeofday(&m, NULL);
 	check_fork1(philo, m);
+	check_fork2(philo, m);
 	eating(philo, m);
 	gettimeofday(&m, NULL);
 	if (((m.tv_usec / 1000) + (m.tv_sec * 1000)) >= (philo->tm_eat + ft_atoi(philo->gen->av[4])))

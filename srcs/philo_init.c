@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:03:27 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/04 00:46:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/05 00:16:31 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void    philo_init(char **argv)
     m_st->gen = (t_gen *)malloc(sizeof(t_gen));
     m_st->gen->threads = (pthread_t *)malloc(sizeof(pthread_t) * ft_atoi(argv[1]));
     m_st->gen->m_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
+	m_st->gen->fork_st = ft_calloc(ft_atoi(argv[1]), sizeof(int));
 	m_st->time->tm_death = ft_atoi(argv[2]);
 	m_st->time->tm_eat = 0;
 	exec_threads(argv, m_st);

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/04 01:22:15 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/05 00:17:26 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ typedef struct s_args
 typedef struct s_gen
 {
     char            **av;
-	pthread_mutex_t	*m_fork;
-    pthread_mutex_t *s_fork;
-    pthread_t   	*threads;
     int             *fork_st;
+	pthread_mutex_t	*m_fork;
+    pthread_mutex_t eat;
+    pthread_mutex_t sleep;
+    pthread_mutex_t think;
+    pthread_t   	*threads;
 }   t_gen;
 
 typedef	struct s_time
