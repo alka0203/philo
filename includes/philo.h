@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/23 15:37:30 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/04 13:31:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,6 @@
 # include <stdlib.h>
 # include <sys/time.h>
 
-typedef struct s_mutex
-{
-    pthread_mutex_t flag_lock;
-    pthread_mutex_t sec_lock;
-    pthread_mutex_t *fork;
-    pthread_mutex_t my_fork;
-    pthread_mutex_t your_fork;
-    int             *philo_fork;
-	int				i;
-    int             j;
-    int             k;
-	long int		p_create;
-    long int     tm_eat;
-    long int     tm_to_die;
-    long int     right_fork;
-    long int     left_fork;
-    char            **av;
-    int             flag;
-    
-}   t_mutex;
-
 typedef struct s_args
 {
     int num_philos;
@@ -48,10 +27,54 @@ typedef struct s_args
     int num_tm_eat;
 }  t_args;
 
+typedef struct s_gen
+{
+    char            **av;
+	pthread_mutex_t	*m_fork;
+    pthread_mutex_t eat;
+    pthread_mutex_t sleep;
+    pthread_mutex_t think;
+    pthread_t   	*threads;
+}   t_gen;
+
+typedef	struct s_time
+{
+	long int	tm_eat;
+	long int	tm_death;
+    long int	tm_init;
+}	t_time;
+
+typedef struct s_philo
+{
+    int             i;
+    long int        tm_eat;
+	long int	    tm_init;
+    long int        tm_think;
+    t_gen           *gen;
+    t_time          *time;
+    int             counter;
+}	t_philo;
+
+typedef	struct s_main
+{
+    t_args          *args;
+	t_gen	        *gen;
+	t_time	        *time;
+	t_philo	        *philo;
+}	t_main;
+
 int     ft_atoi(const char *str);
 int     ft_isalnum(int c);
-void    philo_init(char **argv);
+void	ft_putstr(char *str);
+t_main  *philo_init(char **argv);
+void    struct_init(t_main *m_st, int i);
 void	*ft_calloc(size_t nmemb, size_t size);
-// void    exec_threads(char **argv);
+void	check_spaces(char **argv);
+void    exec_threads(char **argv, t_main *m_st);
+void	check_fork1(t_philo *philo, struct timeval m);
+void	check_fork2(t_philo *philo, struct timeval m);
+void	eating(t_philo *philo, struct timeval m);
+void	sleeping(t_philo *philo);
+void	thinking(t_philo *philo);
 
 #endif

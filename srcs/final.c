@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 14:55:43 by asanthos          #+#    #+#             */
-/*   Updated: 2022/03/24 18:25:33 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/04 12:06:05 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	check_fork2(t_mutex *mut)
 	{
 		pthread_mutex_lock(&mut->fork[mut->j]);
 		mut->philo_fork[mut->j] = 1;
+		usleep(1000);
 		gettimeofday(&m, NULL);
 		printf("%ld philo %d picks up a fork\n", (((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->p_create), mut->i);
 		pthread_mutex_unlock(&mut->fork[mut->j]);
@@ -46,6 +47,7 @@ static void	check_fork2(t_mutex *mut)
 	{
 		pthread_mutex_lock(&mut->fork[mut->k]);
 		mut->philo_fork[mut->k] = 1;
+		usleep(1000);
 		gettimeofday(&m, NULL);
 		printf("%ld philo %d picks up a fork\n", (((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->p_create), mut->i);
 		pthread_mutex_unlock(&mut->fork[mut->k]);
@@ -61,22 +63,22 @@ static void	check_fork2(t_mutex *mut)
 
 static void	check_fork1(t_mutex *mut)
 {
-	struct timeval	m;
+	struct timeval	n;
 
 	if (mut->philo_fork[mut->i] == 0)
 	{
 		pthread_mutex_lock(&mut->fork[mut->i]);
 		mut->philo_fork[mut->i] = 1;
 		usleep(1000);
-		gettimeofday(&m, NULL);
-		printf("%ld philo %d picks up a fork\n", (((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->p_create), mut->i);
+		gettimeofday(&n, NULL);
+		printf("%ld philo %d picks up a fork\n", (((n.tv_usec / 1000) + (n.tv_sec * 1000)) - mut->p_create), mut->i);
 		pthread_mutex_unlock(&mut->fork[mut->i]);
 	}
 	else
 	{
 		//sleep for the number of sedonds till philo done eating
-		gettimeofday(&m, NULL);
-		usleep(((m.tv_usec / 1000) + (m.tv_sec * 1000)) - mut->tm_eat);
+		gettimeofday(&n, NULL);
+		usleep(((n.tv_usec / 1000) + (n.tv_sec * 1000)) - mut->tm_eat);
 	}
 }
 
@@ -103,6 +105,7 @@ void	*tasks(void *args)
 	check_fork2(mut);
 	printf("lala\n");
 	eat(mut);
+	printf("lala\n");
 	return (void *)mut;
 }
 
@@ -122,6 +125,7 @@ static void exec_threads(t_mutex *mut, char **argv, t_args *args)
 		while (mut->i <= args->num_philos)
 		{
 			pthread_mutex_init(&mut->fork[mut->i], NULL);
+			//pass in single philose instead of whole struct mut
 			if (pthread_create(&threads[mut->i], NULL, &tasks, mut) != 0)
 				return;
 			pthread_mutex_destroy(&mut->fork[mut->i]);
