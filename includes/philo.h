@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/04 13:31:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/05 10:41:34 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_args
 typedef struct s_gen
 {
     char            **av;
+    int             *fork_st;
 	pthread_mutex_t	*m_fork;
     pthread_mutex_t eat;
     pthread_mutex_t sleep;
@@ -39,7 +40,7 @@ typedef struct s_gen
 
 typedef	struct s_time
 {
-	long int	tm_eat;
+	long int	*tm_eat;
 	long int	tm_death;
     long int	tm_init;
 }	t_time;
@@ -47,12 +48,8 @@ typedef	struct s_time
 typedef struct s_philo
 {
     int             i;
-    long int        tm_eat;
-	long int	    tm_init;
-    long int        tm_think;
     t_gen           *gen;
     t_time          *time;
-    int             counter;
 }	t_philo;
 
 typedef	struct s_main

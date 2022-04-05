@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/04 13:27:17 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/05 10:42:35 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ static void	check_int(double r)
 	}
 }
 
-// static void	check_num(const char *str, int i)
-// {
-// 	if (str[i] < 48 || str[i] > 57)
-// 	{
-// 		ft_putstr("Error\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// }
+static void	check_num(const char *str, int i)
+{
+	if (str[i] < 48 || str[i] > 57)
+	{
+		ft_putstr("Error\n");
+		exit(EXIT_FAILURE);
+	}
+}
 //look through parsing of letters after number in later args
 int	ft_atoi(const char *str)
 {
@@ -79,7 +79,7 @@ int	ft_atoi(const char *str)
 			s *= -1;
 		i++;
 	}
-	// check_num(str, i);
+	check_num(str, i);
 	while (str[i] <= '9' && str[i] >= '0')
 	{
 		if (i >= 10)
