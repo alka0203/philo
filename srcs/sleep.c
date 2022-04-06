@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sleep.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/03 15:13:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/05 11:29:37 by asanthos         ###   ########.fr       */
+/*   Created: 2022/04/06 13:26:35 by asanthos          #+#    #+#             */
+/*   Updated: 2022/04/06 14:00:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int main(int argc, char **argv)
+void	sleep_func(t_philo *philo)
 {
-	t_main	*m_st;
-
-	if (argc == 5)
+	while (1)
 	{
-		//create a whole parser
-		check_spaces(argv);
-		m_st = philo_init(argv);
-		args_init(m_st);
-		exec_threads(m_st);
-		//exec_threads(argv, m_st);
+		usleep(1000);
+		check_fork1(philo);
 	}
+}
+
+void    think_sleep(t_philo *philo)
+{
+    long int    die_tm;
+    while (1)
+    {
+        usleep(1000);
+        gettimeofday(&philo->time->m, NULL);
+        die_tm = ((philo->time->m.tv_sec * 1000) + (philo->time->m.tv_usec / 1000)) - philo->time->tm_eat[philo->i];
+        if ((die_tm + 1) == philo->args->tm_die)
+            break;
+    }
 }

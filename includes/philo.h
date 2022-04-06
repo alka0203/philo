@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/05 10:41:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/06 15:42:22 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,33 @@ typedef struct s_gen
     pthread_mutex_t sleep;
     pthread_mutex_t think;
     pthread_t   	*threads;
+    int             flag;
 }   t_gen;
 
 typedef	struct s_time
 {
-	long int	*tm_eat;
-	long int	tm_death;
-    long int	tm_init;
+    struct timeval  m;
+	long int	    *tm_eat;
+	long int	    tm_death;
+    long int	    tm_init;
+    long int        tm_gen;
+    long int        tm_left;
+    long int        tm_tasks;
 }	t_time;
 
 typedef struct s_philo
 {
     int             i;
+    int             j;
     t_gen           *gen;
     t_time          *time;
+    t_args          *args;
 }	t_philo;
 
 typedef	struct s_main
 {
     t_args          *args;
-	t_gen	        *gen;
+//	t_gen	        *gen;
 	t_time	        *time;
 	t_philo	        *philo;
 }	t_main;
@@ -63,15 +70,20 @@ typedef	struct s_main
 int     ft_atoi(const char *str);
 int     ft_isalnum(int c);
 void	ft_putstr(char *str);
-t_main  *philo_init(char **argv);
+t_main	*philo_init(char **argv);
+void	args_init(t_main *m_st);
+void	time_init(t_main *m_st);
+void	time_gen(t_philo *philo);
+void	time_tasks(t_philo *philo);
 void    struct_init(t_main *m_st, int i);
+void	init_attr(t_main *m_st, int i);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	check_spaces(char **argv);
-void    exec_threads(char **argv, t_main *m_st);
-void	check_fork1(t_philo *philo, struct timeval m);
-void	check_fork2(t_philo *philo, struct timeval m);
-void	eating(t_philo *philo, struct timeval m);
-void	sleeping(t_philo *philo);
-void	thinking(t_philo *philo);
+void    exec_threads(t_main *m_st);
+void	check_fork1(t_philo *philo);
+void    mut_init(t_main *m_st);
+void    mut_dest(t_main *m_st);
+void	sleep_func(t_philo *philo);
+void    think_sleep(t_philo *philo);
 
 #endif
