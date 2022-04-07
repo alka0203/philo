@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/07 22:55:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/08 02:36:51 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ void	sleep_func(t_philo *philo);
 void	sleep_func2(t_philo *philo);
 void    think_sleep(t_philo *philo);
 void	philo_gen(t_main *m_st);
+void	check_death(t_philo *philo);
 
 #endif

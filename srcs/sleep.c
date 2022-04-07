@@ -6,11 +6,22 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 13:26:35 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/07 12:43:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/08 02:53:46 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	check_death(t_philo *philo)
+{
+	time_gen(philo);
+	if (philo->time->tm_tasks >= (philo->time->tm_init + philo->args->tm_die))
+	{
+		printf("\e[1;92m%ld philo %d has died\n", (((philo->time->m.tv_usec / 1000) + (philo->time->m.tv_sec * 1000)) - philo->time->tm_init), (philo->i + 1));
+		// philo->gen->flag = 1;
+        exit(EXIT_FAILURE);
+	}
+}
 
 void	sleep_func(t_philo *philo)
 {

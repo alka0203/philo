@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:09:59 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/07 23:18:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/08 02:25:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void    *tasks(void *arg)
 
     philo = (t_philo *)arg;
     check_fork1(philo);
-    gettimeofday(&philo->time->m, NULL);
-    if (((philo->time->m.tv_usec / 1000) + (philo->time->m.tv_sec * 1000)) >= (philo->time->tm_eat[philo->i] + (ft_atoi(philo->gen->av[4]) * 1000)))
+    //fork 1 coming out here
+    time_tasks(philo);
+    if (philo->time->tm_tasks >= (philo->time->tm_eat[philo->i] + philo->args->tm_die))
 	{
 		printf("\e[1;92m%ld philo %d has died\n", (((philo->time->m.tv_usec / 1000) + (philo->time->m.tv_sec * 1000)) - philo->time->tm_init), (philo->i + 1));
 		// philo->gen->flag = 1;
