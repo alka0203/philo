@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/06 15:42:22 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/07 22:55:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ typedef struct s_gen
     pthread_mutex_t eat;
     pthread_mutex_t sleep;
     pthread_mutex_t think;
+    pthread_mutex_t lock_mut;
     pthread_t   	*threads;
     int             flag;
+    int             flag2;
 }   t_gen;
 
 typedef	struct s_time
@@ -54,6 +56,7 @@ typedef struct s_philo
 {
     int             i;
     int             j;
+    int             k;
     t_gen           *gen;
     t_time          *time;
     t_args          *args;
@@ -62,7 +65,7 @@ typedef struct s_philo
 typedef	struct s_main
 {
     t_args          *args;
-//	t_gen	        *gen;
+	t_gen	        *gen;
 	t_time	        *time;
 	t_philo	        *philo;
 }	t_main;
@@ -81,9 +84,12 @@ void	*ft_calloc(size_t nmemb, size_t size);
 void	check_spaces(char **argv);
 void    exec_threads(t_main *m_st);
 void	check_fork1(t_philo *philo);
+void	check_fork2(t_philo *philo);
 void    mut_init(t_main *m_st);
 void    mut_dest(t_main *m_st);
 void	sleep_func(t_philo *philo);
+void	sleep_func2(t_philo *philo);
 void    think_sleep(t_philo *philo);
+void	philo_gen(t_main *m_st);
 
 #endif

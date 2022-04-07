@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 13:26:35 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/06 14:00:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/07 12:43:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@ void	sleep_func(t_philo *philo)
 	{
 		usleep(1000);
 		check_fork1(philo);
+	}
+}
+
+void	sleep_func2(t_philo *philo)
+{
+	while (1)
+	{
+		usleep(1000);
+		check_fork2(philo);
 	}
 }
 
