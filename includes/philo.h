@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/08 02:36:51 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:19:05 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ typedef struct s_args
 typedef struct s_gen
 {
     char            **av;
+    int             ac;
     int             *fork_st;
 	pthread_mutex_t	*m_fork;
-    pthread_mutex_t eat;
-    pthread_mutex_t sleep;
-    pthread_mutex_t think;
-    pthread_mutex_t lock_mut;
     pthread_t   	*threads;
+    int             *num_eat;
     int             flag;
     int             flag2;
 }   t_gen;
@@ -74,7 +72,7 @@ int     ft_atoi(const char *str);
 int     ft_isalnum(int c);
 void	ft_putstr(char *str);
 t_main	*philo_init(char **argv);
-void	args_init(t_main *m_st);
+void	args_init(t_main *m_st, int argc);
 void	time_init(t_main *m_st);
 void	time_gen(t_philo *philo);
 void	time_tasks(t_philo *philo);
@@ -92,5 +90,6 @@ void	sleep_func2(t_philo *philo);
 void    think_sleep(t_philo *philo);
 void	philo_gen(t_main *m_st);
 void	check_death(t_philo *philo);
+void	num_eat(t_philo *philo);
 
 #endif

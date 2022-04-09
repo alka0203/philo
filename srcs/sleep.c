@@ -6,11 +6,28 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 13:26:35 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/08 02:53:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:40:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	num_eat(t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	philo->gen->flag = 1;
+	while (philo->gen->num_eat[i])
+	{
+		if (philo->gen->num_eat[i] != philo->gen->num_eat[i + 1])
+		{
+			philo->gen->flag = 0;
+			break;
+		}
+		i++;
+	}
+}
 
 void	check_death(t_philo *philo)
 {

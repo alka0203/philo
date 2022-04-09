@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:09:59 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/08 02:25:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:33:35 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void    *tasks(void *arg)
 		// philo->gen->flag = 1;
         exit(EXIT_FAILURE);
 	}
+    check_fork1(philo);
+    if (philo->gen->flag == 1)
+		return (NULL);
     return ((void *)&philo->gen->flag);
 }
 
@@ -49,18 +52,17 @@ static void th_create(t_main *m_st)
 static void    th_join(t_main *m_st)
 {
 	int	i;
-	int *res;
 
     i = 0;
     while (i < m_st->args->num_philos)
     {
-        if (pthread_join(m_st->gen->threads[i], (void **)&res) != 0)
+        if (pthread_join(m_st->gen->threads[i], NULL) != 0)
         {
             printf("An error has occurred while joining threads!\n");
             return ;
         }
-        if (*res == 1)
-            return ;
+        if (m_st->philo[i].gen->flag == 1)
+		    return ;
         i++;
     }
 }
@@ -73,4 +75,6 @@ void    exec_threads(t_main *m_st)
     th_create(m_st);
     th_join(m_st);
     mut_dest(m_st);
+    if (m_st->philo->gen->flag == 1)
+		return ;
 }

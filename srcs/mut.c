@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:12:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/07 22:56:35 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/09 14:24:48 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	philo_gen(t_main *m_st)
 
 void	init_attr(t_main *m_st, int i)
 {
-	// m_st->philo[i].gen = m_st->gen;
 	m_st->philo[i].time = m_st->time;
 	m_st->philo[i].args = m_st->args;
 	m_st->philo[i].i = i;
@@ -63,7 +62,6 @@ void    mut_init(t_main *m_st)
 	int i;
 
 	i = 0;
-	pthread_mutex_init(&m_st->gen->lock_mut, NULL);
 	while (i < m_st->args->num_philos)
 	{
 		pthread_mutex_init(&m_st->gen->m_fork[i], NULL);
@@ -81,5 +79,4 @@ void    mut_dest(t_main *m_st)
 		pthread_mutex_destroy(&m_st->gen->m_fork[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&m_st->gen->lock_mut);
 }
