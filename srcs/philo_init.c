@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:03:27 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/08 18:09:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/10 12:42:20 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_main	*philo_init(char **argv)
     m_st->gen->m_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (ft_atoi(argv[1])));
 	m_st->gen->fork_st = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));
 	m_st->gen->num_eat = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));
+	m_st->gen->philo_eat = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));
 	m_st->time->tm_eat = (long int *)malloc(sizeof(long int) * ft_atoi(argv[1]));
 	m_st->gen->flag = 0;
 	m_st->gen->flag2 = 0;

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/08 18:19:05 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/10 16:14:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_gen
 	pthread_mutex_t	*m_fork;
     pthread_t   	*threads;
     int             *num_eat;
+    int             *philo_eat;
     int             flag;
     int             flag2;
 }   t_gen;
@@ -91,5 +92,7 @@ void    think_sleep(t_philo *philo);
 void	philo_gen(t_main *m_st);
 void	check_death(t_philo *philo);
 void	num_eat(t_philo *philo);
+int     philo_eat(t_philo *philo);
+void	sleep_round(t_philo *philo);
 
 #endif
