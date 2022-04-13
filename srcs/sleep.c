@@ -1,12 +1,12 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*                                                                           */
 /*                                                        :::      ::::::::   */
 /*   sleep.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 13:26:35 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/10 16:25:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/10 21:15:46 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	sleep_round(t_philo *philo)
 
 int	philo_eat(t_philo *philo)
 {
-	// printf("%d %d\n", philo->gen->philo_eat[philo->i], philo->i);
 	if (philo->gen->philo_eat[philo->i] == 1)
 		return (0);
 	return (1);
@@ -52,7 +51,7 @@ void	num_eat(t_philo *philo)
 
 void	check_death(t_philo *philo)
 {
-	time_gen(philo);
+	time_tasks(philo);
 	if (philo->time->tm_tasks >= (philo->time->tm_init + philo->args->tm_die))
 	{
 		printf("\e[1;92m%ld philo %d has died\n", (((philo->time->m.tv_usec / 1000) + (philo->time->m.tv_sec * 1000)) - philo->time->tm_init), (philo->i + 1));

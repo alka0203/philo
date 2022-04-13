@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:09:59 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/10 16:19:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:31:42 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ void    *tasks(void *arg)
     time_tasks(philo);
     if (philo->time->tm_tasks >= (philo->time->tm_eat[philo->i] + philo->args->tm_die))
 	{
+        printf("BOOP\n");
 		printf("\e[1;92m%ld philo %d has died\n", (((philo->time->m.tv_usec / 1000) + (philo->time->m.tv_sec * 1000)) - philo->time->tm_init), (philo->i + 1));
         exit(EXIT_FAILURE);
 	}
+    // check_fork1(philo); 
     return ((void *)&philo->gen->flag);
 }
 

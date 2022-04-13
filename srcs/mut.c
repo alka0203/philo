@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:12:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/09 14:24:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/11 15:09:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	init_attr(t_main *m_st, int i)
 	else
 		m_st->philo[i].j = i + 1;
 }
- 
+
 void	time_tasks(t_philo *philo)
 {
 	gettimeofday(&philo->time->m, NULL);
@@ -62,6 +62,7 @@ void    mut_init(t_main *m_st)
 	int i;
 
 	i = 0;
+	pthread_mutex_init(&m_st->gen->print_mut, NULL);
 	while (i < m_st->args->num_philos)
 	{
 		pthread_mutex_init(&m_st->gen->m_fork[i], NULL);
@@ -79,4 +80,5 @@ void    mut_dest(t_main *m_st)
 		pthread_mutex_destroy(&m_st->gen->m_fork[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&m_st->gen->print_mut);
 }
