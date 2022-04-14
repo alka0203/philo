@@ -95,7 +95,8 @@ void		think_sleep(t_philo *philo);
 void		philo_gen(t_main *m_st);
 void		check_death(t_philo *philo);
 void		num_eat(t_philo *philo);
-int			philo_eat(t_philo *philo);
+void		philo_eat(t_philo *philo);
 void		sleep_round(t_philo *philo);
+void	    change_val(t_philo *philo);
 
 #endif

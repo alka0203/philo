@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:00 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/11 17:23:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/14 13:48:37 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static void	eating(t_philo *philo)
 		print_tasks(philo);
 		philo->gen->num_eat[philo->i] += 1;
 		usleep(philo->args->tm_eat * 1000);
-		// philo->gen->philo_eat[philo->i] = 1;
 		pthread_mutex_lock(&philo->gen->m_fork[philo->i]);
+		philo->gen->philo_eat[philo->i] = 1;
 		philo->gen->fork_st[philo->i] = 0;
 		philo->gen->fork_st[philo->j] = 0;
 		pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
@@ -56,8 +56,6 @@ static void	eating(t_philo *philo)
 
 void	check_fork2(t_philo *philo)
 {
-	// if (philo->gen->fork_st[philo->j] == 1)
-	// 	sleep_func2(philo);
 	pthread_mutex_lock(&philo->gen->m_fork[philo->j]);
 	philo->gen->fork_st[philo->j] = 1;
 	// philo->gen->colour = "\e[0;95m";
@@ -71,8 +69,17 @@ void	check_fork2(t_philo *philo)
 
 void	check_fork1(t_philo *philo)
 {
-	// if (philo_eat(philo) == 0)
-	// 	sleep_round(philo);
+	if (philo->time->tm_eat[philo->i] != 0 )
+	{
+		time_tasks(philo);
+		if (philo->time->tm_tasks >= (philo->time->tm_eat[philo->i] + philo->args->tm_die))
+		{
+			printf("BOOP\n");
+			printf("\e[1;92m%ld philo %d has died\n", (((philo->time->m.tv_usec / 1000) + (philo->time->m.tv_sec * 1000)) - philo->time->tm_init), (philo->i + 1));
+			exit(EXIT_FAILURE);
+		}
+	}
+	philo_eat(philo);
 	time_tasks(philo);
 	if (philo->gen->fork_st[philo->k] == 1 || philo->gen->fork_st[philo->j] == 1)
 	{
@@ -87,4 +94,6 @@ void	check_fork1(t_philo *philo)
 	printf("\e[0;36m%ld philo %d picks up a fork %d\n", (philo->time->tm_eat[philo->i] - philo->time->tm_init), (philo->i + 1), (philo->i + 1));
 	pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
 	check_fork2(philo);
+	change_val(philo);
+	check_fork1(philo);
 }

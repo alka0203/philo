@@ -12,6 +12,28 @@
 
 #include "../includes/philo.h"
 
+void	change_val(t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (philo->gen->philo_eat[i])
+	{
+		if (philo->gen->philo_eat[i] == 0)
+		{
+			usleep(1000);
+			change_val(philo);
+		}
+		i++;
+	}
+	i = 0;
+	while (philo->gen->philo_eat[i])
+	{
+		philo->gen->philo_eat[i] = 1;
+		i++;
+	}
+}
+
 void	sleep_round(t_philo *philo)
 {
 	int	i;
@@ -25,11 +47,16 @@ void	sleep_round(t_philo *philo)
 	}
 }
 
-int	philo_eat(t_philo *philo)
+void	philo_eat(t_philo *philo)
 {
-	if (philo->gen->philo_eat[philo->i] == 1)
-		return (0);
-	return (1);
+	if (philo->gen->philo_eat[philo->i] == 1 && (philo->gen->philo_eat[philo->k] == 0 || philo->gen->philo_eat[philo->j] == 0))
+	{
+		// printf("boop %d\n", (philo->i + 1));
+		usleep(1000);
+		check_fork1(philo);
+	}
+	else if (philo->gen->philo_eat[philo->i] == 1 && philo->gen->philo_eat[philo->k] == 1 && philo->gen->philo_eat[philo->j] == 1)
+		philo->gen->philo_eat[philo->i] = 0;
 }
 
 void	num_eat(t_philo *philo)
