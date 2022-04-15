@@ -34,6 +34,8 @@ typedef struct s_gen
     int             *fork_st;
 	pthread_mutex_t	*m_fork;
     pthread_mutex_t print_mut;
+    pthread_mutex_t lock;
+    pthread_mutex_t lock_both;
     pthread_t   	*threads;
     int             *num_eat;
     int             *philo_eat;
@@ -90,7 +92,6 @@ void		check_fork2(t_philo *philo);
 void		mut_init(t_main *m_st);
 void		mut_dest(t_main *m_st);
 void		sleep_func(t_philo *philo);
-void		sleep_func2(t_philo *philo);
 void		think_sleep(t_philo *philo);
 void		philo_gen(t_main *m_st);
 void		check_death(t_philo *philo);

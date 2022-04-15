@@ -89,20 +89,25 @@ void	check_death(t_philo *philo)
 
 void	sleep_func(t_philo *philo)
 {
-	while (1)
-	{
-		usleep(1000);
-		check_fork1(philo);
-	}
-}
-
-void	sleep_func2(t_philo *philo)
-{
-	while (1)
-	{
-		usleep(1000);
-		check_fork2(philo);
-	}
+	// pthread_mutex_lock(&philo->gen->lock);
+	// printf("%d %d\n", philo->gen->fork_st[philo->i], (philo->i + 1));
+	// if (philo->gen->fork_st[philo->i] == 1 || philo->gen->fork_st[philo->j] == 1)
+	// {
+		pthread_mutex_unlock(&philo->gen->lock);
+		while (philo->gen->fork_st[philo->i] == 1 || philo->gen->fork_st[philo->j] == 1)
+		{
+			// printf("boop\n");
+			// printf();
+			time_tasks(philo);
+			if (philo->time->tm_eat[philo->i] == 0)
+				check_death(philo);
+			if (philo->gen->fork_st[philo->i] == 0 && philo->gen->fork_st[philo->j] == 0)
+				break;
+			usleep(1000);
+		}
+	// }
+	// else
+	// 	pthread_mutex_unlock(&philo->gen->lock);
 }
 
 void    think_sleep(t_philo *philo)
