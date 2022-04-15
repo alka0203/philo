@@ -12,6 +12,7 @@
 
 #include "../includes/philo.h"
 
+//possible bus error
 void	change_val(t_philo *philo)
 {
 	int	i;
@@ -29,7 +30,7 @@ void	change_val(t_philo *philo)
 	i = 0;
 	while (philo->gen->philo_eat[i])
 	{
-		philo->gen->philo_eat[i] = 1;
+		philo->gen->philo_eat[i] = 0;
 		i++;
 	}
 }
@@ -51,7 +52,6 @@ void	philo_eat(t_philo *philo)
 {
 	if (philo->gen->philo_eat[philo->i] == 1 && (philo->gen->philo_eat[philo->k] == 0 || philo->gen->philo_eat[philo->j] == 0))
 	{
-		// printf("boop %d\n", (philo->i + 1));
 		usleep(1000);
 		check_fork1(philo);
 	}
@@ -89,25 +89,25 @@ void	check_death(t_philo *philo)
 
 void	sleep_func(t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->gen->lock);
-	// printf("%d %d\n", philo->gen->fork_st[philo->i], (philo->i + 1));
-	// if (philo->gen->fork_st[philo->i] == 1 || philo->gen->fork_st[philo->j] == 1)
-	// {
-		pthread_mutex_unlock(&philo->gen->lock);
-		while (philo->gen->fork_st[philo->i] == 1 || philo->gen->fork_st[philo->j] == 1)
-		{
-			// printf("boop\n");
-			// printf();
-			time_tasks(philo);
-			if (philo->time->tm_eat[philo->i] == 0)
-				check_death(philo);
-			if (philo->gen->fork_st[philo->i] == 0 && philo->gen->fork_st[philo->j] == 0)
-				break;
-			usleep(1000);
-		}
-	// }
-	// else
-	// 	pthread_mutex_unlock(&philo->gen->lock);
+	pthread_mutex_unlock(&philo->gen->lock);
+	while (philo->gen->fork_st[philo->i] == 1 || philo->gen->fork_st[philo->j] == 1)
+	{
+		time_tasks(philo);
+		if (philo->time->tm_eat[philo->i] == 0)
+			check_death(philo);
+		if (philo->gen->fork_st[philo->i] == 0 && philo->gen->fork_st[philo->j] == 0)
+			break;
+		usleep(1000);
+	}
+}
+
+void	sleep_func2(t_philo *philo)
+{
+	philo->gen->fork_st[philo->i] = 0;
+	pthread_mutex_unlock(&philo->gen->lock);
+	time_tasks(philo);
+	// usleep(philo->time->tm_tasks - (philo->time->tm_eat[philo->j] + philo->args->num_tm_eat));
+	check_fork1(philo);
 }
 
 void    think_sleep(t_philo *philo)
