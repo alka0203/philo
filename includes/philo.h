@@ -88,7 +88,6 @@ void		*ft_calloc(size_t nmemb, size_t size);
 void		check_spaces(char **argv);
 void		exec_threads(t_main *m_st);
 void		check_fork1(t_philo *philo);
-void		check_fork2(t_philo *philo);
 void		mut_init(t_main *m_st);
 void		mut_dest(t_main *m_st);
 void		sleep_func(t_philo *philo);

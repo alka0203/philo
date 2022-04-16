@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:00 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/16 13:40:58 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/17 03:55:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	print_tasks(t_philo *philo)
+static void	print_tasks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->gen->print_mut);
 	time_tasks(philo);
@@ -43,8 +43,8 @@ static void	sleep_philo(t_philo *philo)
 
 static void	eating(t_philo *philo)
 {
-	if (philo->gen->fork_st[philo->j] == 1 && philo->gen->fork_st[philo->i] == 1)
-	{
+	// if (philo->gen->fork_st[philo->j] == 1 && philo->gen->fork_st[philo->i] == 1)
+	// {
 		philo->gen->colour = "\e[0;31m";
 		philo->gen->task = "is eating";
 		print_tasks(philo);
@@ -56,21 +56,16 @@ static void	eating(t_philo *philo)
 		philo->gen->fork_st[philo->j] = 0;
 		pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
 		sleep_philo(philo);
-	}
+	// }
 }
 
-void	check_fork2(t_philo *philo)
+static void	check_fork2(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->gen->m_fork[philo->j]);
 	if (philo->gen->fork_st[philo->j] == 1)
 		sleep_func2(philo);
+	pthread_mutex_lock(&philo->gen->m_fork[philo->j]);
 	philo->gen->fork_st[philo->j] = 1;
-	// philo->gen->colour = "\e[0;36m";
-	// philo->gen->task = "picks up a fork";
 	time_gen(philo);
-	// print_tasks(philo);
-	// philo->gen->colour = "\e[0;94m";
-	// print_tasks(philo);
 	time_tasks(philo);
 	printf("\e[0;36m%ld philo %d picks up a fork %d\n", (philo->time->tm_eat[philo->i] - philo->time->tm_init), (philo->i + 1), (philo->i + 1));
 	printf("\e[0;94m%ld philo %d picks up a fork %d\n", (philo->time->tm_tasks - philo->time->tm_init), (philo->i + 1), (philo->j + 1));

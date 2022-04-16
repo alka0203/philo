@@ -20,9 +20,9 @@ void	change_val(t_philo *philo)
 	i = 0;
 	while (philo->gen->philo_eat[i])
 	{
-		if (philo->gen->philo_eat[i] == 0)
+		if (philo->gen->philo_eat[i] == 1)
 		{
-			usleep(1000);
+			usleep(philo->args->tm_eat * 1000);
 			change_val(philo);
 		}
 		i++;
@@ -30,7 +30,7 @@ void	change_val(t_philo *philo)
 	i = 0;
 	while (philo->gen->philo_eat[i])
 	{
-		philo->gen->philo_eat[i] = 0;
+		philo->gen->philo_eat[i] = 1;
 		i++;
 	}
 }
@@ -92,16 +92,9 @@ void	sleep_func(t_philo *philo)
 	pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
 	while (philo->gen->fork_st[philo->i] == 1 || philo->gen->fork_st[philo->j] == 1)
 	{
-		pthread_mutex_lock(&philo->gen->lock);
 		time_tasks(philo);
 		if (philo->time->tm_eat[philo->i] == 0)
 			check_death(philo);
-		if (philo->gen->fork_st[philo->i] == 0 && philo->gen->fork_st[philo->j] == 0)
-		{
-			pthread_mutex_unlock(&philo->gen->lock);
-			break;
-		}
-		pthread_mutex_unlock(&philo->gen->lock);
 		usleep(1000);
 	}
 }
