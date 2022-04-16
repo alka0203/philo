@@ -1,17 +1,3 @@
-/* ************************************************************************** */
-/*                                                                           */
-/*                                                        :::      ::::::::   */
-/*   sleep.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 13:26:35 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/10 21:15:46 by asanthos         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../includes/philo.h"
-
 //possible bus error
 void	change_val(t_philo *philo)
 {
@@ -20,7 +6,7 @@ void	change_val(t_philo *philo)
 	i = 0;
 	while (philo->gen->philo_eat[i])
 	{
-		if (philo->gen->philo_eat[i] == 0)
+		if (philo->gen->philo_eat[i] == 1)
 		{
 			usleep(1000);
 			change_val(philo);
@@ -30,8 +16,10 @@ void	change_val(t_philo *philo)
 	i = 0;
 	while (philo->gen->philo_eat[i])
 	{
-		philo->gen->philo_eat[i] = 0;
+		pthread_mutex_lock(&philo->gen->lock);
+		philo->gen->philo_eat[i] = 1;
 		i++;
+		pthread_mutex_unlock(&philo->gen->lock);
 	}
 }
 
