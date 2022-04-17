@@ -50,13 +50,19 @@ void	sleep_round(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	if (philo->gen->philo_eat[philo->i] == 1 && (philo->gen->philo_eat[philo->k] == 0 || philo->gen->philo_eat[philo->j] == 0))
+	int	i;
+
+	i = 0;
+	if (philo->gen->philo_eat[philo->i] == 2)
 	{
-		usleep(1000);
-		check_fork1(philo);
+		while (philo->gen->philo_eat[philo->i] == 1 || philo->gen->philo_eat[philo->i] == 1)
+			usleep(1000);
 	}
-	else if (philo->gen->philo_eat[philo->i] == 1 && philo->gen->philo_eat[philo->k] == 1 && philo->gen->philo_eat[philo->j] == 1)
-		philo->gen->philo_eat[philo->i] = 0;
+	while (philo->gen->philo_eat[i])
+	{
+		philo->gen->philo_eat[i] = 1;
+		i++;
+	}
 }
 
 void	num_eat(t_philo *philo)

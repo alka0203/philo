@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:00 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/17 03:55:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/17 05:26:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	eating(t_philo *philo)
 		philo->gen->fork_st[philo->j] = 0;
 		pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
 		sleep_philo(philo);
-	// }
+	// Z7}
 }
 
 static void	check_fork2(t_philo *philo)
@@ -96,7 +96,7 @@ void	check_fork1(t_philo *philo)
 	philo->gen->fork_st[philo->i] = 1;
 	pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
 	check_fork2(philo);
-	// change_val(philo);
+	philo_eat(philo);
+	usleep(1000);
 	check_fork1(philo);
 }
-//fix change_val
