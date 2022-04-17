@@ -48,6 +48,30 @@ void	sleep_round(t_philo *philo)
 	}
 }
 
+void	num_eat(t_philo *philo)
+{
+	if (philo->gen->num_eat[philo->i] == philo->args->num_tm_eat)
+		philo->gen->flag2[philo->i] = 1;
+}
+
+int	check_all_eat(t_philo *philo)
+{
+	int	i;
+	int	checker;
+
+	i = 0;
+	checker = 0;
+	while (philo->gen->num_eat[philo->i])
+	{
+		if (philo->gen->num_eat[philo->i] == philo->args->num_tm_eat)
+			checker += 1;
+		i++;
+	}
+	if (checker == philo->args->num_philos)
+		return 1;
+	return 0;
+}
+
 void	philo_eat(t_philo *philo)
 {
 	int	i;
@@ -65,22 +89,28 @@ void	philo_eat(t_philo *philo)
 	}
 }
 
-void	num_eat(t_philo *philo)
-{
-	int	i;
+// void	num_eat(t_philo *philo)
+// {
+// 	if (philo->gen->num_eat[philo->i] == philo->args->num_tm_eat)
+// 		return ;
+// }
 
-	i = 0;
-	philo->gen->flag = 1;
-	while (philo->gen->num_eat[i])
-	{
-		if (philo->gen->num_eat[i] != philo->gen->num_eat[i + 1])
-		{
-			philo->gen->flag = 0;
-			break;
-		}
-		i++;
-	}
-}
+// void	num_eat(t_philo *philo)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	philo->gen->flag = 1;
+// 	while (philo->gen->num_eat[i])
+// 	{
+// 		if (philo->gen->num_eat[i] != philo->gen->num_eat[i + 1])
+// 		{
+// 			philo->gen->flag = 0;
+// 			break;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	check_death(t_philo *philo)
 {

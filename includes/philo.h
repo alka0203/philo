@@ -42,7 +42,7 @@ typedef struct s_gen
 	char			*colour;
 	char			*task;
     int             flag;
-    int             flag2;
+    int             *flag2;
 }   t_gen;
 
 typedef	struct s_time
@@ -99,5 +99,6 @@ void		num_eat(t_philo *philo);
 void		philo_eat(t_philo *philo);
 void		sleep_round(t_philo *philo);
 void	    change_val(t_philo *philo);
+int			check_all_eat(t_philo *philo);
 
 #endif
