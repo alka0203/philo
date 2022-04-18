@@ -50,7 +50,7 @@ void	sleep_round(t_philo *philo)
 
 void	num_eat(t_philo *philo)
 {
-	if (philo->gen->num_eat[philo->i] == philo->args->num_tm_eat)
+	if ((philo->gen->num_eat[philo->i] - 1) == philo->args->num_tm_eat)
 		philo->gen->flag2[philo->i] = 1;
 }
 
@@ -61,9 +61,9 @@ int	check_all_eat(t_philo *philo)
 
 	i = 0;
 	checker = 0;
-	while (philo->gen->num_eat[philo->i])
+	while (i < philo->args->num_philos)
 	{
-		if (philo->gen->num_eat[philo->i] == philo->args->num_tm_eat)
+		if ((philo->gen->num_eat[philo->i] - 1) == philo->args->num_tm_eat)
 			checker += 1;
 		i++;
 	}
@@ -79,11 +79,13 @@ void	philo_eat(t_philo *philo)
 	i = 0;
 	if (philo->gen->philo_eat[philo->i] == 2)
 	{
-		while (philo->gen->philo_eat[philo->i] == 1 || philo->gen->philo_eat[philo->i] == 1)
+		while (philo->gen->philo_eat[philo->k] == 1 || philo->gen->philo_eat[philo->j] == 1)
 			usleep(1000);
 	}
-	while (philo->gen->philo_eat[i])
+	i = 0;
+	while (i < philo->args->num_philos)
 	{
+		// printf("boop\n");
 		philo->gen->philo_eat[i] = 1;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:09:59 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/16 13:22:38 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/18 04:03:46 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,19 @@
 void    *tasks(void *arg)
 {
     t_philo *philo;
+    int     i;
 
     philo = (t_philo *)arg;
-    int i = 0;
+    i = 0;
     while (i < philo->args->num_philos)
     {
         philo->gen->philo_eat[i] = 1;
+        i++;
+    }
+    i = 0;
+    while (i < philo->args->num_philos)
+    {
+        philo->gen->num_eat[i] = 1;
         i++;
     }
     check_fork1(philo);
