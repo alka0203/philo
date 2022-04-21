@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:09:59 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/18 04:03:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/20 10:52:19 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ void    *tasks(void *arg)
 
     philo = (t_philo *)arg;
     i = 0;
+    if (philo->args->num_philos == 1)
+    {
+        printf("Need two forks to eat\n");
+        free(&philo->time->tm_eat[philo->i]);
+        free(&philo->gen->num_eat[philo->i]);
+        free(&philo->gen->philo_eat[philo->i]);
+        free(&philo->gen->flag2[philo->i]);
+        free(&philo->gen->fork_st[philo->i]);
+        return NULL;
+    }
     while (i < philo->args->num_philos)
     {
         philo->gen->philo_eat[i] = 1;
@@ -75,4 +85,5 @@ void    exec_threads(t_main *m_st)
     th_create(m_st);
     th_join(m_st);
     mut_dest(m_st);
+    free_philo(m_st);
 }

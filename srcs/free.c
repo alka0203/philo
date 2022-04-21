@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/03 15:13:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/20 10:22:00 by asanthos         ###   ########.fr       */
+/*   Created: 2022/04/20 10:24:44 by asanthos          #+#    #+#             */
+/*   Updated: 2022/04/20 10:26:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int main(int argc, char **argv)
+void    free_philo(t_main *m_st)
 {
-	t_main	*m_st;
-
-	if (argc == 5 || argc == 6)
-	{
-		//create a whole parser
-		check_spaces(argv);
-		m_st = philo_init(argv);
-		args_init(m_st, argc);
-		exec_threads(m_st);
-		free(m_st);
-	}
+    free(m_st->gen);
+	free(m_st->args);
+	free(m_st->time);
+	free(m_st->philo);
 }

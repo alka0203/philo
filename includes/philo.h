@@ -36,6 +36,7 @@ typedef struct s_gen
     pthread_mutex_t print_mut;
     pthread_mutex_t lock;
     pthread_mutex_t lock_both;
+    pthread_mutex_t check_eat;
     pthread_t   	*threads;
     int             *num_eat;
     int             *philo_eat;
@@ -100,5 +101,6 @@ void		philo_eat(t_philo *philo);
 void		sleep_round(t_philo *philo);
 void	    change_val(t_philo *philo);
 int			check_all_eat(t_philo *philo);
+void        free_philo(t_main *m_st);
 
 #endif

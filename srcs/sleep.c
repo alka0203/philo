@@ -12,29 +12,6 @@
 
 #include "../includes/philo.h"
 
-//possible bus error
-void	change_val(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (philo->gen->philo_eat[i])
-	{
-		if (philo->gen->philo_eat[i] == 1)
-		{
-			usleep(philo->args->tm_eat * 1000);
-			change_val(philo);
-		}
-		i++;
-	}
-	i = 0;
-	while (philo->gen->philo_eat[i])
-	{
-		philo->gen->philo_eat[i] = 1;
-		i++;
-	}
-}
-
 void	sleep_round(t_philo *philo)
 {
 	int	i;
@@ -74,22 +51,28 @@ int	check_all_eat(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	int	i;
-
-	i = 0;
-	if (philo->gen->philo_eat[philo->i] == 2)
-	{
-		while (philo->gen->philo_eat[philo->k] == 1 || philo->gen->philo_eat[philo->j] == 1)
-			usleep(1000);
-	}
-	i = 0;
-	while (i < philo->args->num_philos)
-	{
-		// printf("boop\n");
-		philo->gen->philo_eat[i] = 1;
-		i++;
-	}
+	while ((philo->gen->philo_eat[philo->i] > philo->gen->philo_eat[philo->k]) || (philo->gen->philo_eat[philo->i] > philo->gen->philo_eat[philo->j]))
+		usleep(1000);	
 }
+
+// void	philo_eat(t_philo *philo)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	pthread_mutex_lock(&philo->gen->check_eat);
+// 	if (philo->gen->philo_eat[philo->i] == 2)
+// 	{
+// 		pthread_mutex_unlock(&philo->gen->check_eat);
+// 		while (philo->gen->philo_eat[philo->k] == 1 || philo->gen->philo_eat[philo->j] == 1)
+// 			usleep(1000);
+// 		pthread_mutex_lock(&philo->gen->check_eat);
+// 		philo->gen->philo_eat[i] = 1;
+// 		pthread_mutex_unlock(&philo->gen->check_eat);
+// 	}
+// 	else
+// 		pthread_mutex_unlock(&philo->gen->check_eat);
+// }
 
 // void	num_eat(t_philo *philo)
 // {

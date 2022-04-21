@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:12:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/17 03:24:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/20 10:46:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void    mut_init(t_main *m_st)
 
 	i = 0;
 	pthread_mutex_init(&m_st->gen->print_mut, NULL);
+	pthread_mutex_init(&m_st->gen->check_eat, NULL);
 	while (i < m_st->args->num_philos)
 	{
 		pthread_mutex_init(&m_st->gen->m_fork[i], NULL);
@@ -78,7 +79,10 @@ void    mut_dest(t_main *m_st)
 	while (i < m_st->args->num_philos)
 	{
 		pthread_mutex_destroy(&m_st->gen->m_fork[i]);
+		// free(&m_st->gen->m_fork[i]);
+		// free(&m_st->gen->threads[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&m_st->gen->check_eat);
 	pthread_mutex_destroy(&m_st->gen->print_mut);
 }
