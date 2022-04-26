@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:09:59 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/20 10:52:19 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/26 17:03:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void    *tasks(void *arg)
 {
     t_philo *philo;
-    int     i;
 
     philo = (t_philo *)arg;
-    i = 0;
     if (philo->args->num_philos == 1)
     {
         printf("Need two forks to eat\n");
@@ -28,17 +26,6 @@ void    *tasks(void *arg)
         free(&philo->gen->flag2[philo->i]);
         free(&philo->gen->fork_st[philo->i]);
         return NULL;
-    }
-    while (i < philo->args->num_philos)
-    {
-        philo->gen->philo_eat[i] = 1;
-        i++;
-    }
-    i = 0;
-    while (i < philo->args->num_philos)
-    {
-        philo->gen->num_eat[i] = 1;
-        i++;
     }
     check_fork1(philo);
     return ((void *)&philo->gen->flag);

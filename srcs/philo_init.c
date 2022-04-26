@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:03:27 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/17 19:13:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:46:42 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ t_main	*philo_init(char **argv)
 	m_st->gen->av = argv;
     m_st->gen->threads = (pthread_t *)malloc(sizeof(pthread_t) * ft_atoi(argv[1]));
     m_st->gen->m_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
+	m_st->gen->mut_colour = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
+	m_st->gen->mut_task = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
+	m_st->gen->eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
+	m_st->gen->tm_eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
+	m_st->gen->p_eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
 	m_st->gen->fork_st = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));
 	m_st->gen->num_eat = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));
 	m_st->gen->philo_eat = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:13:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/20 10:22:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:46:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int main(int argc, char **argv)
 		//create a whole parser
 		check_spaces(argv);
 		m_st = philo_init(argv);
+		m_st->gen->ac = argc;
 		args_init(m_st, argc);
 		exec_threads(m_st);
 		free(m_st);

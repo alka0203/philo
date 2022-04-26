@@ -12,6 +12,58 @@
 
 #include "../includes/philo.h"
 
+int	check_flag(t_philo *philo)
+{
+	if (philo->gen->ac == 6)
+	{
+		pthread_mutex_lock(&philo->gen->ch_flag);
+		if (philo->gen->flag == 1 || (check_all_eat(philo) == 1))
+		{
+			pthread_mutex_unlock(&philo->gen->ch_flag);
+			return 1;
+		}
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->gen->ch_flag);
+		if (philo->gen->flag == 1)
+		{
+			pthread_mutex_unlock(&philo->gen->ch_flag);
+			return 1;
+		}
+	}
+	pthread_mutex_unlock(&philo->gen->ch_flag);
+	return 0;
+}
+
+void	ft_sleep2(t_philo *philo)
+{
+	struct timeval	m;
+
+	while (42)
+	{
+		gettimeofday(&m, NULL);
+		//change depending on task
+		if (philo->time->tm_eat[philo->i] + philo->args->tm_eat + philo->args->tm_sleep == ((m.tv_sec * 1000) + (m.tv_usec / 1000)))
+			break;
+		usleep(500);
+	}
+}
+
+void	ft_sleep(t_philo *philo, int task_tm)
+{
+	struct timeval	m;
+
+	while (42)
+	{
+		gettimeofday(&m, NULL);
+		//change depending on task
+		if (philo->time->tm_eat[philo->i] + task_tm == ((m.tv_sec * 1000) + (m.tv_usec / 1000)))
+			break;
+		usleep(500);
+	}
+}
+
 void	sleep_round(t_philo *philo)
 {
 	int	i;
@@ -27,8 +79,16 @@ void	sleep_round(t_philo *philo)
 
 void	num_eat(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->gen->eat[philo->i]);
 	if ((philo->gen->num_eat[philo->i] - 1) == philo->args->num_tm_eat)
+	{
+		pthread_mutex_unlock(&philo->gen->eat[philo->i]);
+		pthread_mutex_lock(&philo->gen->num);
 		philo->gen->flag2[philo->i] = 1;
+		pthread_mutex_unlock(&philo->gen->num);
+	}
+	else
+		pthread_mutex_unlock(&philo->gen->eat[philo->i]);
 }
 
 int	check_all_eat(t_philo *philo)
@@ -51,72 +111,52 @@ int	check_all_eat(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	while ((philo->gen->philo_eat[philo->i] > philo->gen->philo_eat[philo->k]) || (philo->gen->philo_eat[philo->i] > philo->gen->philo_eat[philo->j]))
-		usleep(1000);	
+	while (1)
+	{
+		pthread_mutex_lock(&philo->gen->p_eat[philo->i]);
+		if ((philo->gen->philo_eat[philo->i] <= philo->gen->philo_eat[philo->k]) && (philo->gen->philo_eat[philo->i] <= philo->gen->philo_eat[philo->j]))
+		{
+			pthread_mutex_unlock(&philo->gen->p_eat[philo->i]);
+			break;
+		}
+		pthread_mutex_unlock(&philo->gen->p_eat[philo->i]);
+		usleep(50);
+	}	
 }
-
-// void	philo_eat(t_philo *philo)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	pthread_mutex_lock(&philo->gen->check_eat);
-// 	if (philo->gen->philo_eat[philo->i] == 2)
-// 	{
-// 		pthread_mutex_unlock(&philo->gen->check_eat);
-// 		while (philo->gen->philo_eat[philo->k] == 1 || philo->gen->philo_eat[philo->j] == 1)
-// 			usleep(1000);
-// 		pthread_mutex_lock(&philo->gen->check_eat);
-// 		philo->gen->philo_eat[i] = 1;
-// 		pthread_mutex_unlock(&philo->gen->check_eat);
-// 	}
-// 	else
-// 		pthread_mutex_unlock(&philo->gen->check_eat);
-// }
-
-// void	num_eat(t_philo *philo)
-// {
-// 	if (philo->gen->num_eat[philo->i] == philo->args->num_tm_eat)
-// 		return ;
-// }
-
-// void	num_eat(t_philo *philo)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	philo->gen->flag = 1;
-// 	while (philo->gen->num_eat[i])
-// 	{
-// 		if (philo->gen->num_eat[i] != philo->gen->num_eat[i + 1])
-// 		{
-// 			philo->gen->flag = 0;
-// 			break;
-// 		}
-// 		i++;
-// 	}
-// }
 
 void	check_death(t_philo *philo)
 {
-	time_tasks(philo);
-	if (philo->time->tm_tasks >= (philo->time->tm_init + philo->args->tm_die))
-	{
-		printf("\e[1;92m%ld philo %d has died\n", (((philo->time->m.tv_usec / 1000) + (philo->time->m.tv_sec * 1000)) - philo->time->tm_init), (philo->i + 1));
-		// philo->gen->flag = 1;
-        exit(EXIT_FAILURE);
-	}
+	print_t(philo, "\e[1;92m", "has died");
+	pthread_mutex_lock(&philo->gen->lock_both);
+	philo->gen->flag = 1;
+	pthread_mutex_unlock(&philo->gen->lock_both);
 }
 
 void	sleep_func(t_philo *philo)
 {
 	pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
-	while (philo->gen->fork_st[philo->i] == 1 || philo->gen->fork_st[philo->j] == 1)
+	while (1)
 	{
-		time_tasks(philo);
+		pthread_mutex_lock(&philo->gen->tm_eat[philo->i]);
 		if (philo->time->tm_eat[philo->i] == 0)
-			check_death(philo);
-		usleep(1000);
+		{
+			pthread_mutex_unlock(&philo->gen->tm_eat[philo->i]);
+			if (tm_tasks(philo) >= (philo->time->tm_init + philo->args->tm_die))
+			{
+				check_death(philo);
+				break;
+			}
+		}
+		else
+			pthread_mutex_unlock(&philo->gen->tm_eat[philo->i]);
+		pthread_mutex_lock(&philo->gen->lock);
+		if (philo->gen->fork_st[philo->i] == 0 && philo->gen->fork_st[philo->j] == 0)
+		{
+			pthread_mutex_unlock(&philo->gen->lock);
+			break;
+		}
+		pthread_mutex_unlock(&philo->gen->lock);
+		usleep(50);
 	}
 }
 
@@ -124,8 +164,12 @@ void	sleep_func2(t_philo *philo)
 {
 	philo->gen->fork_st[philo->i] = 0;
 	pthread_mutex_unlock(&philo->gen->lock);
-	time_tasks(philo);
-	usleep((philo->time->tm_tasks - (philo->time->tm_eat[philo->j] + philo->args->num_tm_eat)) * 1000);
+	while (1)
+	{
+		if (tm_tasks(philo) == (philo->time->tm_eat[philo->j] + philo->args->num_tm_eat))
+			break;
+		usleep(50);
+	}
 	check_fork1(philo);
 }
 
