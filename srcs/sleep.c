@@ -17,11 +17,19 @@ int	check_flag(t_philo *philo)
 	if (philo->gen->ac == 6)
 	{
 		pthread_mutex_lock(&philo->gen->ch_flag);
-		if (philo->gen->flag == 1 || (check_all_eat(philo) == 1))
+		if (philo->gen->flag == 1)
 		{
 			pthread_mutex_unlock(&philo->gen->ch_flag);
 			return 1;
 		}
+		else if (philo->gen->flag == 0)
+		{
+			pthread_mutex_unlock(&philo->gen->ch_flag);
+			if (check_all_eat(philo) == 1)
+				return 1;
+		}
+		else
+			pthread_mutex_unlock(&philo->gen->ch_flag);
 	}
 	else
 	{
@@ -31,8 +39,9 @@ int	check_flag(t_philo *philo)
 			pthread_mutex_unlock(&philo->gen->ch_flag);
 			return 1;
 		}
+		else
+			pthread_mutex_unlock(&philo->gen->ch_flag);
 	}
-	pthread_mutex_unlock(&philo->gen->ch_flag);
 	return 0;
 }
 
@@ -79,16 +88,17 @@ void	sleep_round(t_philo *philo)
 
 void	num_eat(t_philo *philo)
 {
+	int	x;
+
 	pthread_mutex_lock(&philo->gen->eat[philo->i]);
-	if ((philo->gen->num_eat[philo->i] - 1) == philo->args->num_tm_eat)
+	x = philo->gen->num_eat[philo->i];
+	pthread_mutex_unlock(&philo->gen->eat[philo->i]);
+	if ((x - 1) == philo->args->num_tm_eat)
 	{
-		pthread_mutex_unlock(&philo->gen->eat[philo->i]);
 		pthread_mutex_lock(&philo->gen->num);
 		philo->gen->flag2[philo->i] = 1;
 		pthread_mutex_unlock(&philo->gen->num);
 	}
-	else
-		pthread_mutex_unlock(&philo->gen->eat[philo->i]);
 }
 
 int	check_all_eat(t_philo *philo)
@@ -127,14 +137,13 @@ void	philo_eat(t_philo *philo)
 void	check_death(t_philo *philo)
 {
 	print_t(philo, "\e[1;92m", "has died");
-	pthread_mutex_lock(&philo->gen->lock_both);
+	pthread_mutex_lock(&philo->gen->ch_flag);
 	philo->gen->flag = 1;
-	pthread_mutex_unlock(&philo->gen->lock_both);
+	pthread_mutex_unlock(&philo->gen->ch_flag);
 }
 
 void	sleep_func(t_philo *philo)
 {
-	pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->gen->tm_eat[philo->i]);
@@ -149,13 +158,21 @@ void	sleep_func(t_philo *philo)
 		}
 		else
 			pthread_mutex_unlock(&philo->gen->tm_eat[philo->i]);
-		pthread_mutex_lock(&philo->gen->lock);
-		if (philo->gen->fork_st[philo->i] == 0 && philo->gen->fork_st[philo->j] == 0)
+		pthread_mutex_lock(&philo->gen->m_fork[philo->i]);
+		if (philo->gen->fork_st[philo->i] == 0)
 		{
-			pthread_mutex_unlock(&philo->gen->lock);
-			break;
+			pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
+			pthread_mutex_lock(&philo->gen->m_fork[philo->j]);
+			if (philo->gen->fork_st[philo->j] == 0)
+			{
+				pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
+				break;
+			}
+			else
+				pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
 		}
-		pthread_mutex_unlock(&philo->gen->lock);
+		else
+			pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
 		usleep(50);
 	}
 }

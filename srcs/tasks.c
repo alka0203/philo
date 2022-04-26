@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:00 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/26 20:05:24 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/26 15:36:13 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ static void	think(t_philo *philo)
 static void	sleep_philo(t_philo *philo)
 {
 	print_t(philo, "\e[0;95m", "is sleeping");
-	usleep(philo->args->tm_sleep * 1000);
+	//check if sleep functionaz needed
+	// usleep(philo->args->tm_sleep * 1000);
+	ft_sleep2(philo);
 	think(philo);
 }
 
@@ -100,9 +102,17 @@ void	check_fork1(t_philo *philo)
 	if (philo->gen->fork_st[philo->i] == 1)
 	{
 		pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
+		sleep_func(philo);
+	}
+	else if (philo->gen->fork_st[philo->i] == 0)
+	{
+		pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
 		pthread_mutex_lock(&philo->gen->m_fork[philo->j]);
 		if (philo->gen->fork_st[philo->j] == 1)
+		{
+			pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
 			sleep_func(philo);
+		}
 		else
 			pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
 	}

@@ -49,6 +49,7 @@ typedef struct s_gen
     pthread_mutex_t ph_eat;
     pthread_mutex_t *p_eat;
     pthread_mutex_t n_eat;
+    pthread_mutex_t mut_init;
     pthread_t   	*threads;
     int             *num_eat;
     int             *philo_eat;
