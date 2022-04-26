@@ -1,672 +1,351 @@
-==1292== Helgrind, a thread error detector
-==1292== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
-==1292== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==1292== Command: ./philo 4 1000 500 500 1
-==1292== Parent PID: 1
-==1292== 
-==1292== ---Thread-Announcement------------------------------------------
-==1292== 
-==1292== Thread #2 was created
-==1292==    at 0x4997152: clone (clone.S:71)
-==1292==    by 0x485C2EB: create_thread (createthread.c:101)
-==1292==    by 0x485DE0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
-==1292==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109D20: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292== 
-==1292== ---Thread-Announcement------------------------------------------
-==1292== 
-==1292== Thread #3 was created
-==1292==    at 0x4997152: clone (clone.S:71)
-==1292==    by 0x485C2EB: create_thread (createthread.c:101)
-==1292==    by 0x485DE0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
-==1292==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109D20: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292== 
-==1292== ---Thread-Announcement------------------------------------------
-==1292== 
-==1292== Thread #1 is the program's root thread
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D510 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d510 is 0 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10994C: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292==  Lock at 0x4A6D538 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d538 is 40 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10994C: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during read of size 1 at 0x4A6DA54 by thread #2
-==1292== Locks held: 1, at address 0x4A6D510
-==1292==    at 0x10AEB7: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous write of size 1 by thread #3
-==1292== Locks held: 1, at address 0x4A6D538
-==1292==    at 0x10AF58: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292==  Address 0x4a6da54 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109AB0: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D2D0 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A340: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d2d0 is 112 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292==  Lock at 0x4A6D538 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d538 is 40 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10994C: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during read of size 1 at 0x4A6DA54 by thread #2
-==1292== Locks held: 1, at address 0x4A6D2D0
-==1292==    at 0x10B781: sleep_func (in /home/vscode/src/philo)
-==1292==    by 0x10AEC9: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous write of size 1 by thread #3
-==1292== Locks held: 1, at address 0x4A6D538
-==1292==    at 0x10AF58: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292==  Address 0x4a6da54 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109AB0: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D370 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A2D6: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d370 is 272 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during write of size 1 at 0x4A6DAA4 by thread #1
-==1292== Locks held: none
-==1292==    at 0x10A020: init_attr (in /home/vscode/src/philo)
-==1292==    by 0x109CCD: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292== 
-==1292== This conflicts with a previous read of size 1 by thread #3
-==1292== Locks held: 1, at address 0x4A6D370
-==1292==    at 0x10B409: check_all_eat (in /home/vscode/src/philo)
-==1292==    by 0x10B027: check_flag (in /home/vscode/src/philo)
-==1292==    by 0x10AB70: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292==  Address 0x4a6daa4 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109ADE: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D280 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A287: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d280 is 32 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292==  Lock at 0x4A6D370 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A2D6: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d370 is 272 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during read of size 1 at 0x4A6DAA4 by thread #3
-==1292== Locks held: 2, at addresses 0x4A6D280 0x4A6D370
-==1292==    at 0x10B409: check_all_eat (in /home/vscode/src/philo)
-==1292==    by 0x10B027: check_flag (in /home/vscode/src/philo)
-==1292==    by 0x10A719: print_t (in /home/vscode/src/philo)
-==1292==    by 0x10A840: eating (in /home/vscode/src/philo)
-==1292==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous write of size 1 by thread #1
-==1292== Locks held: none
-==1292==    at 0x10A020: init_attr (in /home/vscode/src/philo)
-==1292==    by 0x109CCD: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6daa4 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109ADE: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ---Thread-Announcement------------------------------------------
-==1292== 
-==1292== Thread #5 was created
-==1292==    at 0x4997152: clone (clone.S:71)
-==1292==    by 0x485C2EB: create_thread (createthread.c:101)
-==1292==    by 0x485DE0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
-==1292==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109D20: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D510 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d510 is 0 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10994C: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292==  Lock at 0x4A6D2D0 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A340: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d2d0 is 112 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during write of size 1 at 0x4A6DA50 by thread #5
-==1292== Locks held: 1, at address 0x4A6D510
-==1292==    at 0x10AB24: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous read of size 1 by thread #2
-==1292== Locks held: 1, at address 0x4A6D2D0
-==1292==    at 0x10B75F: sleep_func (in /home/vscode/src/philo)
-==1292==    by 0x10AEC9: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292==  Address 0x4a6da50 is 0 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109AB0: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D3E0 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A376: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d3e0 is 384 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during read of size 4 at 0x4A6DAF4 by thread #3
-==1292== Locks held: 1, at address 0x4A6D3E0
-==1292==    at 0x10A88E: eating (in /home/vscode/src/philo)
-==1292==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous write of size 1 by thread #1
-==1292== Locks held: none
-==1292==    at 0x109FE3: init_attr (in /home/vscode/src/philo)
-==1292==    by 0x109CCD: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6daf4 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109B0F: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D3E0 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A376: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d3e0 is 384 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during write of size 4 at 0x4A6DAF4 by thread #3
-==1292== Locks held: 1, at address 0x4A6D3E0
-==1292==    at 0x10A8B1: eating (in /home/vscode/src/philo)
-==1292==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous write of size 1 by thread #1
-==1292== Locks held: none
-==1292==    at 0x109FE3: init_attr (in /home/vscode/src/philo)
-==1292==    by 0x109CCD: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6daf4 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109B0F: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D538 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d538 is 40 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10994C: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292==  Lock at 0x4A6D2D0 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A340: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d2d0 is 112 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during write of size 4 at 0x4A6DA54 by thread #3
-==1292== Locks held: 1, at address 0x4A6D538
-==1292==    at 0x10A912: eating (in /home/vscode/src/philo)
-==1292==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous read of size 1 by thread #2
-==1292== Locks held: 1, at address 0x4A6D2D0
-==1292==    at 0x10B781: sleep_func (in /home/vscode/src/philo)
-==1292==    by 0x10AEC9: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292==  Address 0x4a6da54 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109AB0: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ---Thread-Announcement------------------------------------------
-==1292== 
-==1292== Thread #4 was created
-==1292==    at 0x4997152: clone (clone.S:71)
-==1292==    by 0x485C2EB: create_thread (createthread.c:101)
-==1292==    by 0x485DE0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
-==1292==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109D20: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D560 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d560 is 80 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10994C: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292==  Lock at 0x4A6D2D0 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A340: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d2d0 is 112 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during write of size 4 at 0x4A6DA58 by thread #3
-==1292== Locks held: 1, at address 0x4A6D560
-==1292==    at 0x10A991: eating (in /home/vscode/src/philo)
-==1292==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous read of size 4 by thread #4
-==1292== Locks held: 1, at address 0x4A6D2D0
-==1292==    at 0x10B75F: sleep_func (in /home/vscode/src/philo)
-==1292==    by 0x10AEC9: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292==  Address 0x4a6da58 is 8 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109AB0: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D7D8 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A444: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d7d8 is 40 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109A03: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during read of size 4 at 0x4A6DAA4 by thread #3
-==1292== Locks held: 1, at address 0x4A6D7D8
-==1292==    at 0x10AA29: eating (in /home/vscode/src/philo)
-==1292==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous write of size 1 by thread #1
-==1292== Locks held: none
-==1292==    at 0x10A020: init_attr (in /home/vscode/src/philo)
-==1292==    by 0x109CCD: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6daa4 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109ADE: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D7D8 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A444: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d7d8 is 40 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109A03: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during write of size 4 at 0x4A6DAA4 by thread #3
-==1292== Locks held: 1, at address 0x4A6D7D8
-==1292==    at 0x10AA4C: eating (in /home/vscode/src/philo)
-==1292==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous write of size 1 by thread #1
-==1292== Locks held: none
-==1292==    at 0x10A020: init_attr (in /home/vscode/src/philo)
-==1292==    by 0x109CCD: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6daa4 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109ADE: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D7D8 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A444: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d7d8 is 40 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109A03: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during read of size 4 at 0x4A6DAA4 by thread #3
-==1292== Locks held: 1, at address 0x4A6D7D8
-==1292==    at 0x10B300: num_eat (in /home/vscode/src/philo)
-==1292==    by 0x10AA8A: eating (in /home/vscode/src/philo)
-==1292==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous write of size 1 by thread #1
-==1292== Locks held: none
-==1292==    at 0x10A020: init_attr (in /home/vscode/src/philo)
-==1292==    by 0x109CCD: th_create (in /home/vscode/src/philo)
-==1292==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6daa4 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109ADE: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D2D0 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A340: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d2d0 is 112 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292==  Lock at 0x4A6D560 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d560 is 80 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10994C: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during read of size 4 at 0x4A6DA58 by thread #4
-==1292== Locks held: 1, at address 0x4A6D2D0
-==1292==    at 0x10B75F: sleep_func (in /home/vscode/src/philo)
-==1292==    by 0x10AEC9: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous write of size 4 by thread #3
-==1292== Locks held: 1, at address 0x4A6D560
-==1292==    at 0x10A991: eating (in /home/vscode/src/philo)
-==1292==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292==  Address 0x4a6da58 is 8 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109AB0: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292==  Lock at 0x4A6D2D0 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A340: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d2d0 is 112 bytes inside a block of size 528 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292==  Lock at 0x4A6D538 was first observed
-==1292==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
-==1292==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292==  Address 0x4a6d538 is 40 bytes inside a block of size 160 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10994C: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== Possible data race during read of size 4 at 0x4A6DA54 by thread #2
-==1292== Locks held: 1, at address 0x4A6D2D0
-==1292==    at 0x10B781: sleep_func (in /home/vscode/src/philo)
-==1292==    by 0x10AEC9: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292== 
-==1292== This conflicts with a previous write of size 4 by thread #3
-==1292== Locks held: 1, at address 0x4A6D538
-==1292==    at 0x10A912: eating (in /home/vscode/src/philo)
-==1292==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
-==1292==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
-==1292==    by 0x109C93: tasks (in /home/vscode/src/philo)
-==1292==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x485D608: start_thread (pthread_create.c:477)
-==1292==    by 0x4997162: clone (clone.S:95)
-==1292==  Address 0x4a6da54 is 4 bytes inside a block of size 16 alloc'd
-==1292==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
-==1292==    by 0x109AB0: philo_init (in /home/vscode/src/philo)
-==1292==    by 0x10972B: main (in /home/vscode/src/philo)
-==1292==  Block was alloc'd by thread #1
-==1292== 
-==1292== ----------------------------------------------------------------
-==1292== 
-==1292== Thread #1: pthread_mutex_destroy with invalid argument
-==1292==    at 0x483FC96: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1292==    by 0x10A6C9: mut_dest (in /home/vscode/src/philo)
-==1292==    by 0x109E0D: exec_threads (in /home/vscode/src/philo)
-==1292==    by 0x10975A: main (in /home/vscode/src/philo)
-==1292== 
-==1292== 
-==1292== Use --history-level=approx or =none to gain increased speed, at
-==1292== the cost of reduced accuracy of conflicting-access information
-==1292== For lists of detected and suppressed errors, rerun with: -s
-==1292== ERROR SUMMARY: 81 errors from 15 contexts (suppressed: 53433 from 114)
+==2121== Helgrind, a thread error detector
+==2121== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
+==2121== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==2121== Command: ./philo 3 2000 300 300 1
+==2121== Parent PID: 1
+==2121== 
+==2121== ---Thread-Announcement------------------------------------------
+==2121== 
+==2121== Thread #2 was created
+==2121==    at 0x4997152: clone (clone.S:71)
+==2121==    by 0x485C2EB: create_thread (createthread.c:101)
+==2121==    by 0x485DE0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
+==2121==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x109D20: th_create (in /home/vscode/src/philo)
+==2121==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121== 
+==2121== ----------------------------------------------------------------
+==2121== 
+==2121== Thread #2 unlocked a not-locked lock at 0x4A6D2B0
+==2121==    at 0x48403F6: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10B89A: sleep_func2 (in /home/vscode/src/philo)
+==2121==    by 0x10AB07: check_fork2 (in /home/vscode/src/philo)
+==2121==    by 0x10B029: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121==  Lock at 0x4A6D2B0 was first observed
+==2121==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10A340: mut_init (in /home/vscode/src/philo)
+==2121==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6d2b0 is 112 bytes inside a block of size 528 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== 
+==2121== ---Thread-Announcement------------------------------------------
+==2121== 
+==2121== Thread #1 is the program's root thread
+==2121== 
+==2121== ----------------------------------------------------------------
+==2121== 
+==2121==  Lock at 0x4A6D350 was first observed
+==2121==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10A2D6: mut_init (in /home/vscode/src/philo)
+==2121==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6d350 is 272 bytes inside a block of size 528 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== Possible data race during write of size 4 at 0x4A6D9C0 by thread #1
+==2121== Locks held: none
+==2121==    at 0x10A020: init_attr (in /home/vscode/src/philo)
+==2121==    by 0x109CCD: th_create (in /home/vscode/src/philo)
+==2121==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121== 
+==2121== This conflicts with a previous read of size 4 by thread #2
+==2121== Locks held: 1, at address 0x4A6D350
+==2121==    at 0x10B49B: check_all_eat (in /home/vscode/src/philo)
+==2121==    by 0x10B0B9: check_flag (in /home/vscode/src/philo)
+==2121==    by 0x10AF97: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121==  Address 0x4a6d9c0 is 0 bytes inside a block of size 12 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
+==2121==    by 0x109ADE: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== ---Thread-Announcement------------------------------------------
+==2121== 
+==2121== Thread #4 was created
+==2121==    at 0x4997152: clone (clone.S:71)
+==2121==    by 0x485C2EB: create_thread (createthread.c:101)
+==2121==    by 0x485DE0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
+==2121==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x109D20: th_create (in /home/vscode/src/philo)
+==2121==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121== 
+==2121== ----------------------------------------------------------------
+==2121== 
+==2121==  Lock at 0x4A6D4F0 was first observed
+==2121==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
+==2121==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6d4f0 is 0 bytes inside a block of size 120 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10994C: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121==  Lock at 0x4A6D518 was first observed
+==2121==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
+==2121==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6d518 is 40 bytes inside a block of size 120 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10994C: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== Possible data race during read of size 1 at 0x4A6D970 by thread #4
+==2121== Locks held: 1, at address 0x4A6D4F0
+==2121==    at 0x10AF18: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121== 
+==2121== This conflicts with a previous write of size 1 by thread #2
+==2121== Locks held: 1, at address 0x4A6D518
+==2121==    at 0x10B881: sleep_func2 (in /home/vscode/src/philo)
+==2121==    by 0x10AB07: check_fork2 (in /home/vscode/src/philo)
+==2121==    by 0x10B029: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121==  Address 0x4a6d970 is 0 bytes inside a block of size 12 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
+==2121==    by 0x109AB0: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== ----------------------------------------------------------------
+==2121== 
+==2121==  Lock at 0x4A6D4F0 was first observed
+==2121==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
+==2121==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6d4f0 is 0 bytes inside a block of size 120 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10994C: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121==  Lock at 0x4A6D518 was first observed
+==2121==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
+==2121==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6d518 is 40 bytes inside a block of size 120 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10994C: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== Possible data race during read of size 1 at 0x4A6D970 by thread #4
+==2121== Locks held: 1, at address 0x4A6D4F0
+==2121==    at 0x10AAF5: check_fork2 (in /home/vscode/src/philo)
+==2121==    by 0x10B029: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121== 
+==2121== This conflicts with a previous write of size 1 by thread #2
+==2121== Locks held: 1, at address 0x4A6D518
+==2121==    at 0x10B881: sleep_func2 (in /home/vscode/src/philo)
+==2121==    by 0x10AB07: check_fork2 (in /home/vscode/src/philo)
+==2121==    by 0x10B029: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121==  Address 0x4a6d970 is 0 bytes inside a block of size 12 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
+==2121==    by 0x109AB0: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== ----------------------------------------------------------------
+==2121== 
+==2121==  Lock at 0x4A6D4F0 was first observed
+==2121==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
+==2121==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6d4f0 is 0 bytes inside a block of size 120 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10994C: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121==  Lock at 0x4A6D518 was first observed
+==2121==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10A3AB: mut_init (in /home/vscode/src/philo)
+==2121==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6d518 is 40 bytes inside a block of size 120 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10994C: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== Possible data race during write of size 1 at 0x4A6D970 by thread #4
+==2121== Locks held: 1, at address 0x4A6D4F0
+==2121==    at 0x10AB24: check_fork2 (in /home/vscode/src/philo)
+==2121==    by 0x10B029: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121== 
+==2121== This conflicts with a previous write of size 1 by thread #2
+==2121== Locks held: 1, at address 0x4A6D518
+==2121==    at 0x10B881: sleep_func2 (in /home/vscode/src/philo)
+==2121==    by 0x10AB07: check_fork2 (in /home/vscode/src/philo)
+==2121==    by 0x10B029: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121==  Address 0x4a6d970 is 0 bytes inside a block of size 12 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
+==2121==    by 0x109AB0: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== ---Thread-Announcement------------------------------------------
+==2121== 
+==2121== Thread #3 was created
+==2121==    at 0x4997152: clone (clone.S:71)
+==2121==    by 0x485C2EB: create_thread (createthread.c:101)
+==2121==    by 0x485DE0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
+==2121==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x109D20: th_create (in /home/vscode/src/philo)
+==2121==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121== 
+==2121== ----------------------------------------------------------------
+==2121== 
+==2121==  Lock at 0x4A6D3C0 was first observed
+==2121==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10A376: mut_init (in /home/vscode/src/philo)
+==2121==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6d3c0 is 384 bytes inside a block of size 528 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== Possible data race during read of size 4 at 0x4A6DA14 by thread #3
+==2121== Locks held: 1, at address 0x4A6D3C0
+==2121==    at 0x10A88E: eating (in /home/vscode/src/philo)
+==2121==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
+==2121==    by 0x10B029: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121== 
+==2121== This conflicts with a previous write of size 4 by thread #1
+==2121== Locks held: none
+==2121==    at 0x109FE3: init_attr (in /home/vscode/src/philo)
+==2121==    by 0x109CCD: th_create (in /home/vscode/src/philo)
+==2121==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6da14 is 4 bytes inside a block of size 12 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
+==2121==    by 0x109B0F: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== ----------------------------------------------------------------
+==2121== 
+==2121==  Lock at 0x4A6D3C0 was first observed
+==2121==    at 0x4843D9D: pthread_mutex_init (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x10A376: mut_init (in /home/vscode/src/philo)
+==2121==    by 0x109DDD: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6d3c0 is 384 bytes inside a block of size 528 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x1098CB: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== Possible data race during write of size 4 at 0x4A6DA14 by thread #3
+==2121== Locks held: 1, at address 0x4A6D3C0
+==2121==    at 0x10A8B1: eating (in /home/vscode/src/philo)
+==2121==    by 0x10AC5A: check_fork2 (in /home/vscode/src/philo)
+==2121==    by 0x10B029: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121== 
+==2121== This conflicts with a previous write of size 4 by thread #1
+==2121== Locks held: none
+==2121==    at 0x109FE3: init_attr (in /home/vscode/src/philo)
+==2121==    by 0x109CCD: th_create (in /home/vscode/src/philo)
+==2121==    by 0x109DF5: exec_threads (in /home/vscode/src/philo)
+==2121==    by 0x10975A: main (in /home/vscode/src/philo)
+==2121==  Address 0x4a6da14 is 4 bytes inside a block of size 12 alloc'd
+==2121==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x109682: ft_calloc (in /home/vscode/src/philo)
+==2121==    by 0x109B0F: philo_init (in /home/vscode/src/philo)
+==2121==    by 0x10972B: main (in /home/vscode/src/philo)
+==2121==  Block was alloc'd by thread #1
+==2121== 
+==2121== 
+==2121== Process terminating with default action of signal 2 (SIGINT)
+==2121==    at 0x495526D: clock_nanosleep@@GLIBC_2.17 (clock_nanosleep.c:78)
+==2121==    by 0x495AEF6: nanosleep (nanosleep.c:27)
+==2121==    by 0x498D88E: usleep (usleep.c:32)
+==2121==    by 0x10B8E6: sleep_func2 (in /home/vscode/src/philo)
+==2121==    by 0x10AB07: check_fork2 (in /home/vscode/src/philo)
+==2121==    by 0x10B029: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121== ----------------------------------------------------------------
+==2121== 
+==2121== Thread #2: Exiting thread still holds 1 lock
+==2121==    at 0x495526D: clock_nanosleep@@GLIBC_2.17 (clock_nanosleep.c:78)
+==2121==    by 0x495AEF6: nanosleep (nanosleep.c:27)
+==2121==    by 0x498D88E: usleep (usleep.c:32)
+==2121==    by 0x10B8E6: sleep_func2 (in /home/vscode/src/philo)
+==2121==    by 0x10AB07: check_fork2 (in /home/vscode/src/philo)
+==2121==    by 0x10B029: check_fork1 (in /home/vscode/src/philo)
+==2121==    by 0x109C93: tasks (in /home/vscode/src/philo)
+==2121==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==2121==    by 0x485D608: start_thread (pthread_create.c:477)
+==2121==    by 0x4997162: clone (clone.S:95)
+==2121== 
+==2121== 
+==2121== Use --history-level=approx or =none to gain increased speed, at
+==2121== the cost of reduced accuracy of conflicting-access information
+==2121== For lists of detected and suppressed errors, rerun with: -s
+==2121== ERROR SUMMARY: 18 errors from 8 contexts (suppressed: 40886 from 73)

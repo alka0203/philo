@@ -134,7 +134,7 @@ void	check_death(t_philo *philo)
 
 void	sleep_func(t_philo *philo)
 {
-	pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
+	pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->gen->tm_eat[philo->i]);

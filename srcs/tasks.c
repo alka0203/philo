@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:00 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/26 17:05:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/26 20:05:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,14 @@ void	check_fork1(t_philo *philo)
 	else
 		pthread_mutex_unlock(&philo->gen->tm_eat[philo->i]);
 	pthread_mutex_lock(&philo->gen->m_fork[philo->i]);
-	if (philo->gen->fork_st[philo->i] == 1 || philo->gen->fork_st[philo->j] == 1)
+	if (philo->gen->fork_st[philo->i] == 1)
 	{
-		sleep_func(philo);
-		// pthread_mutex_lock(&philo->gen->m_fork[philo->i]);
+		pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
+		pthread_mutex_lock(&philo->gen->m_fork[philo->j]);
+		if (philo->gen->fork_st[philo->j] == 1)
+			sleep_func(philo);
+		else
+			pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
 	}
 	else
 		pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
