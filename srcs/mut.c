@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:12:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/26 15:39:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/27 16:25:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void    mut_init(t_main *m_st)
 
 	i = 0;
 	pthread_mutex_init(&m_st->gen->print_mut, NULL);
-	pthread_mutex_init(&m_st->gen->check_eat, NULL);
 	pthread_mutex_init(&m_st->gen->pt_mut, NULL);
 	pthread_mutex_init(&m_st->gen->ch_flag, NULL);
 	pthread_mutex_init(&m_st->gen->tm_t, NULL);
@@ -116,7 +115,7 @@ void    mut_dest(t_main *m_st)
 	int i;
 
 	i = 0;
-	// m_st->gen = m_st->philo->gen;
+	m_st->gen = m_st->philo->gen;
 	while (i < m_st->args->num_philos)
 	{
 		pthread_mutex_destroy(&m_st->gen->p_eat[i]);
@@ -125,8 +124,6 @@ void    mut_dest(t_main *m_st)
 		pthread_mutex_destroy(&m_st->gen->mut_task[i]);
 		pthread_mutex_destroy(&m_st->gen->mut_colour[i]);
 		pthread_mutex_destroy(&m_st->gen->m_fork[i]);
-		// free(&m_st->gen->m_fork[i]);
-		// free(&m_st->gen->threads[i]);
 		i++;
 	}
 	pthread_mutex_destroy(&m_st->gen->mut_init);
@@ -138,6 +135,5 @@ void    mut_dest(t_main *m_st)
 	pthread_mutex_destroy(&m_st->gen->tm_t);
 	pthread_mutex_destroy(&m_st->gen->ch_flag);
 	pthread_mutex_destroy(&m_st->gen->pt_mut);
-	pthread_mutex_destroy(&m_st->gen->check_eat);
 	pthread_mutex_destroy(&m_st->gen->print_mut);
 }

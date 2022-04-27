@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:00 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/26 15:36:13 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/27 12:55:07 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static void	think(t_philo *philo)
 static void	sleep_philo(t_philo *philo)
 {
 	print_t(philo, "\e[0;95m", "is sleeping");
-	//check if sleep functionaz needed
-	// usleep(philo->args->tm_sleep * 1000);
 	ft_sleep2(philo);
 	think(philo);
 }

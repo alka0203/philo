@@ -88,36 +88,6 @@ typedef	struct s_main
 	t_philo	        *philo;
 }	t_main;
 
-// int         ft_atoi(const char *str);
-// int         ft_isalnum(int c);
-// void    	ft_putstr(char *str);
-// t_main  	*philo_init(char **argv);
-// void    	args_init(t_main *m_st, int argc);
-// void    	time_init(t_main *m_st);
-// void    	time_gen(t_philo *philo);
-// void		time_tasks(t_philo *philo);
-// void		struct_init(t_main *m_st, int i);
-// void		init_attr(t_main *m_st, int i);
-// void		*ft_calloc(size_t nmemb, size_t size);
-// void		check_spaces(char **argv);
-// void		exec_threads(t_main *m_st);
-// void		check_fork1(t_philo *philo);
-// void		mut_init(t_main *m_st);
-// void		mut_dest(t_main *m_st);
-// void		sleep_func(t_philo *philo);
-// void	    sleep_func2(t_philo *philo);
-// void		think_sleep(t_philo *philo);
-// void		philo_gen(t_main *m_st);
-// void		check_death(t_philo *philo);
-// void		num_eat(t_philo *philo);
-// void		philo_eat(t_philo *philo);
-// void		sleep_round(t_philo *philo);
-// void	    change_val(t_philo *philo);
-// int			check_all_eat(t_philo *philo);
-// void        free_philo(t_main *m_st);
-// void        ft_sleep(t_philo *philo);
-// void	    print_t(t_philo *philo, char *s1, char *s2);
-
 int         ft_atoi(const char *str);
 int         ft_isalnum(int c);
 void    	ft_putstr(char *str);
@@ -151,5 +121,9 @@ void        print_tasks(t_philo *philo);
 void	    ft_sleep(t_philo *philo, int task_tm);
 void        ft_sleep2(t_philo *philo);
 void        print_t(t_philo *philo, char *s1, char *s2);
+int         check_args(char **argv);
+int         iter_args(char **argv);
+void	    free_mut(t_main *m_st);
+void	    free_mall(t_main *m_st);
 
 #endif

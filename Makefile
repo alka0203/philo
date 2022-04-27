@@ -26,7 +26,7 @@ OBJS = ${SRCS:.c=.o}
 
 CC = gcc -pthread
 
-CFLAGS = -Wall -Werror -Wextra -pthread
+CFLAGS = -Wall -Werror -Wextra -pthread -ggdb
 
 RM = rm -rf
 
