@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/27 15:04:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/28 17:35:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,6 @@ static void	check_int(double r)
 	}
 }
 
-static void	check_num(const char *str, int i)
-{
-	if (str[i] < 48 || str[i] > 57)
-	{
-		ft_putstr("Error\n");
-		exit(EXIT_FAILURE);
-	}
-}
-//look through parsing of letters after number in later args
 int	ft_atoi(const char *str)
 {
 	int		i;
@@ -79,7 +70,6 @@ int	ft_atoi(const char *str)
 			s *= -1;
 		i++;
 	}
-	check_num(str, i);
 	while (str[i] <= '9' && str[i] >= '0')
 	{
 		if (i >= 10)
@@ -88,8 +78,6 @@ int	ft_atoi(const char *str)
 		r = r + (str[i] - '0');
 		i++;
 	}
-	// if (str[i])
-	// 	check_num(str, i);
 	r *= s;
 	return (r);
 }
@@ -102,6 +90,34 @@ int	check_args(char **argv)
 		return 1;
 	}
 	return 0;
+}
+
+static int	check_num_args(char **argv, int i, int j, int k)
+{
+	if ((argv[i][j] < 48 || argv[i][j] > 57) && argv[i][j] != ' ')
+	{
+		printf("Enter numbers sir!\n");
+		return (1);
+	}
+	else if (argv[i][j] >= 48 && argv[i][j] <= 57)
+	{
+		k = j;
+		while (argv[i][k] >= 48 && argv[i][k] <= 57)
+			k++;
+		if (argv[i][k] == ' ')
+		{
+			while (argv[i][k] == ' ')
+			{
+				if (argv[i][k + 1] != ' ' && argv[i][k + 1] != 0)
+				{
+					printf("Error sir!\n");
+					return (1);
+				}
+				k++;
+			}
+		}
+	}
+	return (0);
 }
 
 int	iter_args(char **argv)
@@ -118,30 +134,11 @@ int	iter_args(char **argv)
 		j = 0;
 		while (argv[i][j])
 		{
-			if ((argv[i][j] < 48 || argv[i][j] > 57) && argv[i][j] != ' ')
-			{
-				printf("Enter numbers sir!\n");
-				return 1;
-			}
-			else if (argv[i][j] >= 48 && argv[i][j] <= 57)
-			{
-				k = j;
-				while (argv[i][j] >= 48 && argv[i][j] <= 57)
-				{
-					if (argv[i][j] == ' ')
-					{
-						k++;
-						if (argv[i][j + 1] != ' ' && argv[i][j] != 0)
-							return 1;
-					}
-					k++;
-				}
-			}
+			if (check_num_args(argv, i, j, k) == 1)
+				return (1);
 			j++;
 		}
 		i++;
 	}
-	return 0;
+	return (0);
 }
-
-//fix "    12   12  "12
