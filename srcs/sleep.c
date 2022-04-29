@@ -75,12 +75,16 @@ void	sleep_func(t_philo *philo)
 
 void	sleep_func2(t_philo *philo)
 {
+	long int	eat;
+
+	pthread_mutex_lock(&philo->gen->m_fork[philo->i]);
 	philo->gen->fork_st[philo->i] = 0;
-	pthread_mutex_unlock(&philo->gen->lock);
+	pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
+	eat = philo->time->tm_eat[philo->j];
 	while (1)
 	{
-		if (tm_tasks(philo) == (philo->time->tm_eat[philo->j]
-					+ philo->args->num_tm_eat))
+		if (tm_tasks(philo)
+			== (eat + philo->args->num_tm_eat))
 			break ;
 		usleep(50);
 	}
