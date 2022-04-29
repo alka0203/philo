@@ -20,12 +20,12 @@
 
 typedef struct s_args
 {
-    int num_philos;
-    int tm_eat;
-    int tm_die;
-    int tm_sleep;
-    int num_tm_eat;
-    int task_hd;
+	int	num_philos;
+	int	tm_eat;
+	int	tm_die;
+	int	tm_sleep;
+	int	num_tm_eat;
+	int	task_hd;
 }  t_args;
 
 typedef struct s_gen
@@ -50,6 +50,7 @@ typedef struct s_gen
     pthread_mutex_t *p_eat;
     pthread_mutex_t n_eat;
     pthread_mutex_t mut_init;
+    pthread_mutex_t time_task;
     pthread_t   	*threads;
     int             *num_eat;
     int             *philo_eat;
@@ -70,6 +71,12 @@ typedef	struct s_time
     long int        tm_tasks;
 }	t_time;
 
+
+/*
+i is the philosopher's own id
+j is philo + 1's id
+k if philo - 1's id
+*/
 typedef struct s_philo
 {
     int             i;
@@ -99,7 +106,7 @@ void		time_tasks(t_philo *philo);
 void		struct_init(t_main *m_st, int i);
 void		init_attr(t_main *m_st, int i);
 void		*ft_calloc(size_t nmemb, size_t size);
-void		check_spaces(char **argv);
+int 		check_spaces(char **argv);
 void		exec_threads(t_main *m_st);
 void		check_fork1(t_philo *philo);
 void		mut_init(t_main *m_st);

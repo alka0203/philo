@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:00 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/27 12:55:07 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/29 11:49:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	print_t(t_philo *philo, char *s1, char *s2)
 		pthread_mutex_unlock(&philo->gen->print_mut);
 	else
 	{
-		printf("%s%ld philo %d %s\n", s1, (tm_tasks(philo) - philo->time->tm_init), (philo->i + 1), s2);
+		printf("%s%ld philo %d %s\n", s1,
+			(tm_tasks(philo) - philo->time->tm_init), (philo->i + 1), s2);
 		pthread_mutex_unlock(&philo->gen->print_mut);
 	}
 }
@@ -32,7 +33,7 @@ static void	think(t_philo *philo)
 static void	sleep_philo(t_philo *philo)
 {
 	print_t(philo, "\e[0;95m", "is sleeping");
-	ft_sleep2(philo);
+	ft_sleep(philo, (philo->args->tm_eat + philo->args->tm_sleep));
 	think(philo);
 }
 
@@ -70,22 +71,53 @@ static void	check_fork2(t_philo *philo)
 	if (check_flag(philo) == 1)
 		return ;
 	pthread_mutex_lock(&philo->gen->print_mut);
-	printf("\e[0;36m%ld philo %d picks up a fork %d\n", (philo->time->tm_eat[philo->i] - philo->time->tm_init), (philo->i + 1), (philo->i + 1));
-	printf("\e[0;94m%ld philo %d picks up a fork %d\n", (philo->time->tm_eat[philo->i] - philo->time->tm_init), (philo->i + 1), (philo->j + 1));
+	printf("\e[0;36m%ld philo %d picks up a fork %d\n",
+		(philo->time->tm_eat[philo->i] - philo->time->tm_init),
+		(philo->i + 1), (philo->i + 1));
+	printf("\e[0;94m%ld philo %d picks up a fork %d\n",
+		(philo->time->tm_eat[philo->i] - philo->time->tm_init),
+		(philo->i + 1), (philo->j + 1));
 	pthread_mutex_unlock(&philo->gen->print_mut);
 	eating(philo);
 }
 
+int	one_fork(t_philo *philo)
+{
+	if (philo->args->num_philos == 1)
+	{
+		printf("\e[0;36m%ld philo %d picks up a fork %d\n",
+			(tm_tasks(philo) - philo->time->tm_init),
+			(philo->i + 1), (philo->i + 1));
+		while (1)
+		{
+			if (philo->time->tm_eat[philo->i] == 0)
+			{
+				if (tm_tasks(philo)
+					>= (philo->time->tm_init + philo->args->tm_die))
+				{
+					check_death(philo);
+					return (1);
+				}
+			}
+			usleep(1000);
+		}
+	}
+	return (0);
+}
+
 void	check_fork1(t_philo *philo)
 {
+	if (one_fork(philo) == 1)
+		return ;
 	if ((philo->i % 2 == 0) && (philo->time->tm_eat[philo->i] == 0))
 		usleep(1000);
 	pthread_mutex_lock(&philo->gen->tm_eat[philo->i]);
-	if (philo->time->tm_eat[philo->i] != 0 )
+	if (philo->time->tm_eat[philo->i] != 0)
 	{
 		pthread_mutex_unlock(&philo->gen->tm_eat[philo->i]);
 		pthread_mutex_lock(&philo->gen->tm_eat[philo->i]);
-		if (tm_tasks(philo) >= (philo->time->tm_eat[philo->i] + philo->args->tm_die))
+		if (tm_tasks(philo)
+			>= (philo->time->tm_eat[philo->i] + philo->args->tm_die))
 		{
 			pthread_mutex_unlock(&philo->gen->tm_eat[philo->i]);
 			check_death(philo);

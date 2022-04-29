@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/28 17:35:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/29 10:53:01 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	check_spaces(char **argv)
+int	check_spaces(char **argv)
 {
 	int	i;
 	int	j;
@@ -29,19 +29,20 @@ void	check_spaces(char **argv)
 			if (ft_isalnum(argv[i][j]))
 			{
 				flag = 1;
-				break;
+				break ;
 			}
 			j++;
 		}
 		if (flag == 0)
-			break;
+			break ;
 		i++;
 	}
 	if (flag == 0)
 	{
 		printf("Enter actual values sir!\n");
-		exit(EXIT_FAILURE);
+		return (1);
 	}
+	return (0);
 }
 
 static void	check_int(double r)
@@ -82,16 +83,6 @@ int	ft_atoi(const char *str)
 	return (r);
 }
 
-int	check_args(char **argv)
-{
-	if (ft_atoi(argv[1]) <= 1)
-	{
-		printf("Require at least 2 forks to eat sir!\n");
-		return 1;
-	}
-	return 0;
-}
-
 static int	check_num_args(char **argv, int i, int j, int k)
 {
 	if ((argv[i][j] < 48 || argv[i][j] > 57) && argv[i][j] != ' ')
@@ -129,6 +120,11 @@ int	iter_args(char **argv)
 	i = 1;
 	j = 0;
 	k = 0;
+	if (ft_atoi(argv[1]) < 1)
+	{
+		printf("Require at least 2 forks to eat sir!\n");
+		return (1);
+	}
 	while (argv[i])
 	{
 		j = 0;

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:03:27 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/27 16:36:58 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/04/29 11:56:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,27 @@ t_main	*philo_init(char **argv)
 	m_st->args = (t_args *)malloc(sizeof(t_args));
 	m_st->philo = (t_philo *)malloc(sizeof(t_philo) * ft_atoi(argv[1]));
 	m_st->time = (t_time *)malloc(sizeof(t_time));
-    m_st->gen = (t_gen *)malloc(sizeof(t_gen));
+	m_st->gen = (t_gen *)malloc(sizeof(t_gen));
 	m_st->gen->av = argv;
-    m_st->gen->threads = (pthread_t *)malloc(sizeof(pthread_t) * (ft_atoi(argv[1]) + 1));
-    m_st->gen->m_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (ft_atoi(argv[1]) + 1));
-	m_st->gen->mut_colour = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (ft_atoi(argv[1]) + 1));
-	m_st->gen->mut_task = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (ft_atoi(argv[1]) + 1));
-	m_st->gen->eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (ft_atoi(argv[1]) + 1));
-	m_st->gen->tm_eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (ft_atoi(argv[1]) + 1));
-	m_st->gen->p_eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (ft_atoi(argv[1]) + 1));
+	m_st->gen->threads = (pthread_t *)malloc(sizeof(pthread_t)
+			* ft_atoi(argv[1]));
+	m_st->gen->m_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* ft_atoi(argv[1]));
+	m_st->gen->mut_colour = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* ft_atoi(argv[1]));
+	m_st->gen->mut_task = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* ft_atoi(argv[1]));
+	m_st->gen->eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* ft_atoi(argv[1]));
+	m_st->gen->tm_eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* ft_atoi(argv[1]));
+	m_st->gen->p_eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* ft_atoi(argv[1]));
 	m_st->gen->fork_st = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));
 	m_st->gen->num_eat = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));
 	m_st->gen->philo_eat = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));
-	m_st->time->tm_eat = (long int *)malloc(sizeof(long int) * ft_atoi(argv[1]));
+	m_st->time->tm_eat = (long int *)malloc(sizeof(long int)
+			* ft_atoi(argv[1]));
 	m_st->gen->flag2 = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));
 	m_st->gen->flag = 0;
 	return (m_st);
