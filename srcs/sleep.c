@@ -12,39 +12,6 @@
 
 #include "../includes/philo.h"
 
-int	check_flag(t_philo *philo)
-{
-	if (philo->gen->ac == 6)
-	{
-		pthread_mutex_lock(&philo->gen->ch_flag);
-		if (philo->gen->flag == 1)
-		{
-			pthread_mutex_unlock(&philo->gen->ch_flag);
-			return (1);
-		}
-		else if (philo->gen->flag == 0)
-		{
-			pthread_mutex_unlock(&philo->gen->ch_flag);
-			if (check_all_eat(philo) == 1)
-				return (1);
-		}
-		else
-			pthread_mutex_unlock(&philo->gen->ch_flag);
-	}
-	else
-	{
-		pthread_mutex_lock(&philo->gen->ch_flag);
-		if (philo->gen->flag == 1)
-		{
-			pthread_mutex_unlock(&philo->gen->ch_flag);
-			return (1);
-		}
-		else
-			pthread_mutex_unlock(&philo->gen->ch_flag);
-	}
-	return (0);
-}
-
 void	ft_sleep(t_philo *philo, int task_tm)
 {
 	struct timeval	m;
@@ -64,6 +31,26 @@ void	ft_sleep(t_philo *philo, int task_tm)
 	}
 }
 
+int	check_sleep(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->gen->m_fork[philo->i]);
+	if (philo->gen->fork_st[philo->i] == 0)
+	{
+		pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
+		pthread_mutex_lock(&philo->gen->m_fork[philo->j]);
+		if (philo->gen->fork_st[philo->j] == 0)
+		{
+			pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
+			return (1);
+		}
+		else
+			pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
+	}
+	else
+		pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
+	return (0);
+}
+
 void	sleep_func(t_philo *philo)
 {
 	while (1)
@@ -80,21 +67,8 @@ void	sleep_func(t_philo *philo)
 		}
 		else
 			pthread_mutex_unlock(&philo->gen->tm_eat[philo->i]);
-		pthread_mutex_lock(&philo->gen->m_fork[philo->i]);
-		if (philo->gen->fork_st[philo->i] == 0)
-		{
-			pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
-			pthread_mutex_lock(&philo->gen->m_fork[philo->j]);
-			if (philo->gen->fork_st[philo->j] == 0)
-			{
-				pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
-				break ;
-			}
-			else
-				pthread_mutex_unlock(&philo->gen->m_fork[philo->j]);
-		}
-		else
-			pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
+		if (check_sleep(philo) == 1)
+			break ;
 		usleep(150);
 	}
 }

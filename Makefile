@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 11:32:22 by asanthos          #+#    #+#              #
-#    Updated: 2022/04/29 12:00:31 by asanthos         ###   ########.fr        #
+#    Updated: 2022/04/29 12:53:09 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ SRCS =	./srcs/parser.c		\
 		./srcs/sleep.c		\
 		./srcs/free.c		\
 		./srcs/time.c		\
+		./srcs/eat.c		\
+		./srcs/death.c		\
 
 OBJS = ${SRCS:.c=.o}
 
