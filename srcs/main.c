@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:13:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/29 14:03:19 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 03:42:06 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	main(int argc, char **argv)
 		if (iter_args(argv) == 1 || check_spaces(argv) == 1)
 			return (1);
 		m_st = philo_init(argv);
+		if (malloc_protect(m_st) == 1)
+			return (0);
 		m_st->gen->ac = argc;
 		args_init(m_st, argc);
 		exec_threads(m_st);

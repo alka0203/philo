@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/05/05 02:41:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 03:41:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,6 @@ int			iter_args(char **argv);
 void		free_mut(t_main *m_st);
 void		free_mall(t_main *m_st);
 void		eating(t_philo *philo);
+int			malloc_protect(t_main *m_st);
 
 #endif
