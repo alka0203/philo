@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 11:59:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/29 12:52:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:46:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,13 @@ long int	tm_tasks(t_philo *philo)
 
 void	time_gen(t_philo *philo)
 {
-	gettimeofday(&philo->time->m, NULL);
-	philo->time->tm_eat[philo->i] = ((philo->time->m.tv_sec * 1000)
-			+ (philo->time->m.tv_usec / 1000));
+	struct timeval	m;
+
+	gettimeofday(&m, NULL);
+	pthread_mutex_lock(&philo->gen->eat_tm[philo->i]);
+	philo->time->tm_eat[philo->i] = ((m.tv_sec * 1000)
+			+ (m.tv_usec / 1000));
+	pthread_mutex_unlock(&philo->gen->eat_tm[philo->i]);
 }
 
 void	time_init(t_main *m_st)

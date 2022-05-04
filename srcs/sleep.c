@@ -12,21 +12,42 @@
 
 #include "../includes/philo.h"
 
+//IT'S HEREEEE
+// void	ft_sleep(t_philo *philo, int task_tm)
+// {
+// 	struct timeval	m;
+
+// 	while (42)
+// 	{
+// 		pthread_mutex_lock(&philo->gen->print_mut);
+// 		printf("boop1\n");
+// 		pthread_mutex_unlock(&philo->gen->print_mut);
+// 		gettimeofday(&m, NULL);
+// 		pthread_mutex_lock(&philo->gen->time_task);
+// 		if ((philo->time->tm_eat[philo->i] + task_tm)
+// 			<= ((m.tv_sec * 1000) + (m.tv_usec / 1000)))
+// 		{
+// 			pthread_mutex_unlock(&philo->gen->time_task);
+// 			break ;
+// 		}
+// 		pthread_mutex_unlock(&philo->gen->time_task);
+// 		usleep(500);
+// 	}
+// }
+
 void	ft_sleep(t_philo *philo, int task_tm)
 {
 	struct timeval	m;
+	long int		eat;
 
-	while (42)
+	gettimeofday(&m, NULL);
+	pthread_mutex_lock(&philo->gen->eat_tm[philo->i]);
+	eat = philo->time->tm_eat[philo->i];
+	pthread_mutex_unlock(&philo->gen->eat_tm[philo->i]);
+	while ((eat + task_tm)
+			> ((m.tv_sec * 1000) + (m.tv_usec / 1000)))
 	{
 		gettimeofday(&m, NULL);
-		pthread_mutex_lock(&philo->gen->time_task);
-		if (philo->time->tm_eat[philo->i] + task_tm
-			== ((m.tv_sec * 1000) + (m.tv_usec / 1000)))
-		{
-			pthread_mutex_unlock(&philo->gen->time_task);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->gen->time_task);
 		usleep(500);
 	}
 }

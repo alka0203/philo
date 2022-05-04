@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 12:57:21 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/29 15:14:20 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:21:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ void	check_fork1(t_philo *philo)
 {
 	if (one_fork(philo) == 1)
 		return ;
-	// if ((philo->i % 2 == 0) && (philo->time->tm_eat[philo->i] == 0))
-	// 	usleep(1000);
 	if (check_first_death(philo) == 1)
 		return ;
 	check_avail(philo);
@@ -124,6 +122,7 @@ void	check_fork1(t_philo *philo)
 	if (check_flag(philo) == 1)
 		return ;
 	philo_eat(philo);
-	usleep(1000);
+	// usleep(1000);
 	check_fork1(philo);
 }
+ 

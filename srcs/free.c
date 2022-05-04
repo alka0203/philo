@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 10:24:44 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/29 11:57:13 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:45:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void	free_mall(t_main *m_st)
 	free(m_st->gen->philo_eat);
 	free(m_st->gen->flag2);
 	free(m_st->time->tm_eat);
+	free(m_st->gen->eat_tm);
 }

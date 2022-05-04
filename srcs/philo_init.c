@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:03:27 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/29 14:08:14 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:41:48 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ t_main	*philo_init(char **argv)
 	m_st->gen->tm_eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* ft_atoi(argv[1]));
 	m_st->gen->p_eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* ft_atoi(argv[1]));
+	m_st->gen->eat_tm = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* ft_atoi(argv[1]));
 	m_st->gen->fork_st = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));
 	m_st->gen->num_eat = ft_calloc(ft_atoi(argv[1]), (sizeof(int)));

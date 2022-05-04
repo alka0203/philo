@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:13:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/29 14:16:05 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:41:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_gen
 	pthread_mutex_t	n_eat;
 	pthread_mutex_t	mut_init;
 	pthread_mutex_t	time_task;
+	pthread_mutex_t	*eat_tm;
 	pthread_t		*threads;
 	int				*num_eat;
 	int				*philo_eat;

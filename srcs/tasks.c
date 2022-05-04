@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:00 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/29 15:58:19 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 01:55:50 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	eating(t_philo *philo)
 {
 	print_t(philo, "\e[0;31m", "is eating");
 	ft_sleep(philo, philo->args->tm_eat);
-	pthread_mutex_lock(&philo->gen->ph_eat);
+	pthread_mutex_lock(&philo->gen->p_eat[philo->i]);
 	philo->gen->philo_eat[philo->i] += 1;
-	pthread_mutex_unlock(&philo->gen->ph_eat);
+	pthread_mutex_unlock(&philo->gen->p_eat[philo->i]);
 	pthread_mutex_lock(&philo->gen->m_fork[philo->i]);
 	philo->gen->fork_st[philo->i] = 0;
 	pthread_mutex_unlock(&philo->gen->m_fork[philo->i]);
