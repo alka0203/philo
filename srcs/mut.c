@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:12:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/05/05 02:42:16 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 04:07:20 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,13 @@ void	mut_init(t_main *m_st)
 
 	i = 0;
 	pthread_mutex_init(&m_st->gen->print_mut, NULL);
-	pthread_mutex_init(&m_st->gen->pt_mut, NULL);
 	pthread_mutex_init(&m_st->gen->ch_flag, NULL);
 	pthread_mutex_init(&m_st->gen->tm_t, NULL);
-	pthread_mutex_init(&m_st->gen->check_eat, NULL);
 	pthread_mutex_init(&m_st->gen->num, NULL);
-	pthread_mutex_init(&m_st->gen->lock, NULL);
-	pthread_mutex_init(&m_st->gen->n_eat, NULL);
-	pthread_mutex_init(&m_st->gen->ph_eat, NULL);
 	pthread_mutex_init(&m_st->gen->mut_init, NULL);
-	pthread_mutex_init(&m_st->gen->time_task, NULL);
 	while (i < m_st->args->num_philos)
 	{
 		pthread_mutex_init(&m_st->gen->m_fork[i], NULL);
-		pthread_mutex_init(&m_st->gen->mut_colour[i], NULL);
-		pthread_mutex_init(&m_st->gen->mut_task[i], NULL);
 		pthread_mutex_init(&m_st->gen->eat[i], NULL);
 		pthread_mutex_init(&m_st->gen->tm_eat[i], NULL);
 		pthread_mutex_init(&m_st->gen->p_eat[i], NULL);
@@ -94,20 +86,12 @@ void	mut_dest(t_main *m_st)
 		pthread_mutex_destroy(&m_st->gen->p_eat[i]);
 		pthread_mutex_destroy(&m_st->gen->tm_eat[i]);
 		pthread_mutex_destroy(&m_st->gen->eat[i]);
-		pthread_mutex_destroy(&m_st->gen->mut_task[i]);
-		pthread_mutex_destroy(&m_st->gen->mut_colour[i]);
 		pthread_mutex_destroy(&m_st->gen->m_fork[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&m_st->gen->time_task);
 	pthread_mutex_destroy(&m_st->gen->mut_init);
-	pthread_mutex_destroy(&m_st->gen->ph_eat);
-	pthread_mutex_destroy(&m_st->gen->n_eat);
-	pthread_mutex_destroy(&m_st->gen->lock);
 	pthread_mutex_destroy(&m_st->gen->num);
-	pthread_mutex_destroy(&m_st->gen->check_eat);
 	pthread_mutex_destroy(&m_st->gen->tm_t);
 	pthread_mutex_destroy(&m_st->gen->ch_flag);
-	pthread_mutex_destroy(&m_st->gen->pt_mut);
 	pthread_mutex_destroy(&m_st->gen->print_mut);
 }

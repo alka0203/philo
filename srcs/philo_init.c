@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:03:27 by asanthos          #+#    #+#             */
-/*   Updated: 2022/05/05 03:37:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 04:03:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,6 @@ t_main	*philo_init(char **argv)
 	m_st->gen->threads = (pthread_t *)malloc(sizeof(pthread_t)
 			* ft_atoi(argv[1]));
 	m_st->gen->m_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
-			* ft_atoi(argv[1]));
-	m_st->gen->mut_colour = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
-			* ft_atoi(argv[1]));
-	m_st->gen->mut_task = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* ft_atoi(argv[1]));
 	m_st->gen->eat = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* ft_atoi(argv[1]));

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 12:03:49 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/29 10:52:05 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 04:05:22 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,6 @@ int	check_all_eat(t_philo *philo)
 		return (1);
 	return (0);
 }
-
-// void	philo_eat(t_philo *philo)
-// {
-// 	long int eat_tm;
-
-// 	while (1)
-// 	{
-// 		pthread_mutex_lock(&philo->gen->p_eat[philo->i]);
-// 		eat_tm = philo->gen->philo_eat[philo->i];
-// 		pthread_mutex_unlock(&philo->gen->p_eat[philo->i]);
-// 		pthread_mutex_lock(&philo->gen->ph_eat);
-// 		if ((eat_tm <= philo->gen->philo_eat[philo->k])
-// 			&& (eat_tm <= philo->gen->philo_eat[philo->j]))
-// 		{
-// 			pthread_mutex_unlock(&philo->gen->ph_eat);
-// 			break ;
-// 		}
-// 		pthread_mutex_unlock(&philo->gen->ph_eat);
-// 		usleep(50);
-// 	}	
-// }
 
 void	philo_eat(t_philo *philo)
 {

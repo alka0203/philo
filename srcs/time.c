@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 11:59:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/05/05 02:46:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 04:08:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	time_gen(t_philo *philo)
 
 void	time_init(t_main *m_st)
 {
-	gettimeofday(&m_st->time->m, NULL);
-	m_st->time->tm_init = ((m_st->time->m.tv_sec * 1000)
-			+ (m_st->time->m.tv_usec / 1000));
+	struct timeval	m;
+
+	gettimeofday(&m, NULL);
+	m_st->time->tm_init = ((m.tv_sec * 1000) + (m.tv_usec / 1000));
 }
