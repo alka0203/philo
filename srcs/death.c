@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 12:52:29 by asanthos          #+#    #+#             */
-/*   Updated: 2022/04/29 12:52:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/05 08:00:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_death(t_philo *philo)
 {
-	print_t(philo, "\e[1;92m", "has died");
+	print_t(philo, "\e[1;91m", "has died");
 	pthread_mutex_lock(&philo->gen->ch_flag);
 	philo->gen->flag = 1;
 	pthread_mutex_unlock(&philo->gen->ch_flag);

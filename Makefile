@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 11:32:22 by asanthos          #+#    #+#              #
-#    Updated: 2022/04/29 14:04:57 by asanthos         ###   ########.fr        #
+#    Updated: 2022/05/05 08:27:42 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,16 +29,19 @@ SRCS =	./srcs/parser.c		\
 
 OBJS = ${SRCS:.c=.o}
 
-CC = gcc -pthread
+CC = @gcc -pthread
 
 CFLAGS = -Wall -Werror -Wextra -pthread -ggdb
 
-RM = rm -rf
+RM = @rm -rf
+
+POST = "\e[1;95mLet the eating commence!\n"
 
 $(NAME):	$(OBJS)
 			$(CC) $(OBJS) -o $(NAME)
 
-all:	${NAME}	
+
+all:	${NAME}
 
 clean:
 		${RM} ${OBJS}
@@ -47,3 +50,6 @@ fclean: clean
 		${RM} ${NAME}
 
 re: 	fclean all
+		@printf ${POST}
+
+.PHONY = all clean fclean re
