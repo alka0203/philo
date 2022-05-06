@@ -17,16 +17,21 @@ void	ft_sleep(t_philo *philo, int task_tm)
 	struct timeval	m;
 	long int		eat;
 
+	if (check_flag(philo) == 1)
+		return ;
 	gettimeofday(&m, NULL);
 	pthread_mutex_lock(&philo->gen->eat_tm[philo->i]);
 	eat = philo->time->tm_eat[philo->i];
 	pthread_mutex_unlock(&philo->gen->eat_tm[philo->i]);
-	while ((eat + task_tm)
-			> ((m.tv_sec * 1000) + (m.tv_usec / 1000)))
+	while ((eat + task_tm) > ((m.tv_sec * 1000) + (m.tv_usec / 1000)))
 	{
+		if (check_flag(philo) == 1)
+			return ;
 		gettimeofday(&m, NULL);
 		usleep(500);
 	}
+	if (check_flag(philo) == 1)
+		return ;
 }
 
 int	check_sleep(t_philo *philo)
